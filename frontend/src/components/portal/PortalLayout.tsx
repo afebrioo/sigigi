@@ -60,19 +60,15 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
                 <Link to="/portal/patient-dashboard" className="text-white/90 font-bold text-sm px-4 py-2 rounded-2xl hover:bg-white/10 hover:text-white transition-all duration-300 hidden md:block">
                   Home
                 </Link>
-                {isAuthenticated && (
-                  <Link to="/portal/appointments" className="text-white/90 font-bold text-sm px-4 py-2 rounded-2xl hover:bg-white/10 hover:text-white transition-all duration-300 hidden md:block">
-                    Appointment
-                  </Link>
-                )}
+                <Link to="/portal/appointments" className="text-white/90 font-bold text-sm px-4 py-2 rounded-2xl hover:bg-white/10 hover:text-white transition-all duration-300 hidden md:block">
+                  Appointment
+                </Link>
                 <Link to="/portal/queue" className="text-white/90 font-bold text-sm px-4 py-2 rounded-2xl hover:bg-white/10 hover:text-white transition-all duration-300 hidden md:block">
                   Antrian
                 </Link>
-                {isAuthenticated && (
-                  <Link to="/portal/history" className="text-white/90 font-bold text-sm px-4 py-2 rounded-2xl hover:bg-white/10 hover:text-white transition-all duration-300 hidden md:block">
-                    Rekam Medis
-                  </Link>
-                )}
+                <Link to="/portal/history" className="text-white/90 font-bold text-sm px-4 py-2 rounded-2xl hover:bg-white/10 hover:text-white transition-all duration-300 hidden md:block">
+                  Rekam Medis
+                </Link>
               </>
             ) : (
               <span className="text-white font-extrabold text-lg tracking-tight ml-2">Klinik SIGIGI</span>
@@ -188,15 +184,13 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
           >
             Home
           </Link>
-          {isAuthenticated && (
-            <Link
-              to="/portal/appointments"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-white font-bold hover:text-blue-100 py-2 border-b border-blue-600/50"
-            >
-              Appointment
-            </Link>
-          )}
+          <Link
+            to="/portal/appointments"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block text-white font-bold hover:text-blue-100 py-2 border-b border-blue-600/50"
+          >
+            Appointment
+          </Link>
           <Link
             to="/portal/queue"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -204,15 +198,13 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
           >
             Antrian
           </Link>
-          {isAuthenticated && (
-            <Link
-              to="/portal/history"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-white font-bold hover:text-blue-100 py-2"
-            >
-              Rekam Medis
-            </Link>
-          )}
+          <Link
+            to="/portal/history"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block text-white font-bold hover:text-blue-100 py-2"
+          >
+            Rekam Medis
+          </Link>
         </div>
       )}
 

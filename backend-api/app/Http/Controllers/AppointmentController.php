@@ -118,7 +118,7 @@ class AppointmentController extends Controller
         $appointments = $serving->merge($pending);
 
         $appointments->transform(function ($appointment) use ($request) {
-            $user = $request->user();
+            $user = auth('sanctum')->user();
             $isOwn = $user && $user->id_users === $appointment->user_id;
 
             if (!$isOwn) {

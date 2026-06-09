@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PortalLayout from '@/components/portal/PortalLayout';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { api, getDefaultHeaders } from '@/lib/api';
 
 export default function PatientAppointments() {
@@ -9,14 +9,6 @@ export default function PatientAppointments() {
   const [isLoading, setIsLoading] = useState(true);
   const [clinics, setClinics] = useState<any[]>([]);
   const [selectedClinicId, setSelectedClinicId] = useState<string>('1');
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('portal_isAuthenticated') === 'true';
-    if (!isAuthenticated) {
-      navigate('/portal/login');
-    }
-  }, [navigate]);
 
   useEffect(() => {
     const fetchClinics = async () => {
@@ -50,7 +42,7 @@ export default function PatientAppointments() {
       }
 
       try {
-        const response = await fetch(`${api.appointments}?status=pending&id_klinik=${selectedClinicId}&today=1`, {
+        const response = await fetch(`${api.queueToday}?id_klinik=${selectedClinicId}`, {
           headers: getDefaultHeaders()
         });
 
@@ -77,16 +69,12 @@ export default function PatientAppointments() {
     fetchQueue();
   }, [selectedClinicId]);
 
-  const maskName = (name: string, isUser: boolean) => {
-    if (isUser) return name;
-    const parts = name.split(' ');
-    return parts.map(p => p[0] + '*'.repeat(Math.max(0, p.length - 1))).join(' ');
+  const maskName = (name: string, _isUser: boolean) => {
+    return name;
   };
 
-  const maskPhone = (phone: string, isUser: boolean) => {
-    if (isUser) return phone;
-    if (phone.length <= 8) return phone;
-    return phone.slice(0, 4) + '*'.repeat(phone.length - 8) + phone.slice(-4);
+  const maskPhone = (phone: string, _isUser: boolean) => {
+    return phone || '-';
   };
 
   return (
