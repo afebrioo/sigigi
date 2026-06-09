@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+vendor/
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# System / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Laravel specific
+backend-api/.env
+backend-api/vendor/
+backend-api/bootstrap/cache/*
+backend-api/storage/*.key
+backend-api/storage/framework/cache/data/*
+backend-api/storage/framework/sessions/*
+backend-api/storage/framework/testing/*
+backend-api/storage/framework/views/*
+
+# Frontend specific
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ML specific
+ml-api/venv/
+ml-api/.env
+ml-api/__pycache__/
