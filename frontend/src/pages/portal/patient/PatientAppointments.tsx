@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PortalLayout from '@/components/portal/PortalLayout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api, getDefaultHeaders } from '@/lib/api';
 
 export default function PatientAppointments() {
@@ -9,6 +9,14 @@ export default function PatientAppointments() {
   const [isLoading, setIsLoading] = useState(true);
   const [clinics, setClinics] = useState<any[]>([]);
   const [selectedClinicId, setSelectedClinicId] = useState<string>('1');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('portal_isAuthenticated') === 'true';
+    if (!isAuthenticated) {
+      navigate('/portal/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchClinics = async () => {

@@ -10,6 +10,13 @@ export default function AppointmentQuestionnairePage() {
   const { toast } = useToast();
   const reservationData = location.state?.reservationData || {};
 
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('portal_isAuthenticated') === 'true';
+    if (!isAuthenticated) {
+      navigate('/portal/login');
+    }
+  }, [navigate]);
+
   // Safeguard: if reservationData is missing mandatory fields, redirect to step 1
   useEffect(() => {
     if (!reservationData || !reservationData.namaLengkap || !reservationData.nomorHandphone || !reservationData.tanggalKunjungan) {

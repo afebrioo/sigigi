@@ -165,7 +165,7 @@ export default function PatientDashboard() {
           <h2 className="text-2xl font-black text-blue-950 mb-2 tracking-tight italic uppercase group-hover:text-blue-600 transition-colors">Antrian</h2>
           <p className="text-slate-400 font-bold mb-8 italic text-xs leading-relaxed">Cek status antrian klinik hari ini secara real-time</p>
           <button
-            onClick={() => handleProtectedAction('/portal/appointments')}
+            onClick={() => navigate('/portal/queue')}
             className="w-full mt-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black py-4 px-8 rounded-2xl shadow-lg shadow-blue-100 hover:shadow-blue-200/50 transition-all transform hover:scale-[1.02] active:scale-98 uppercase tracking-widest text-xs"
           >
             Lihat Antrian

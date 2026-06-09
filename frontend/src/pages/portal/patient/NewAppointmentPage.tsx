@@ -7,6 +7,14 @@ import { useToast } from '@/hooks/use-toast';
 export default function NewAppointmentPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('portal_isAuthenticated') === 'true';
+    if (!isAuthenticated) {
+      navigate('/portal/login');
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({
     namaLengkap: '',
     tanggalLahir: '',

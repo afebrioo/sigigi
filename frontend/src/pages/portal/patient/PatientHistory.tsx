@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PortalLayout from '@/components/portal/PortalLayout';
+import { useNavigate } from 'react-router-dom';
 import { api, getDefaultHeaders } from '@/lib/api';
 import { rekamMedisService } from '@/services/tindakan-medis';
 import { useToast } from '@/hooks/use-toast';
@@ -9,6 +10,14 @@ export default function PatientHistory() {
   const [medicalRecords, setMedicalRecords] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('portal_isAuthenticated') === 'true';
+    if (!isAuthenticated) {
+      navigate('/portal/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchHistory = async () => {
