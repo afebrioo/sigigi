@@ -35,6 +35,9 @@ export default function DoctorPatientDetail() {
   const [isSaving, setIsSaving] = useState(false);
   const [odontogramData, setOdontogramData] = useState<any[]>([]);
   const [odontogramUpdates, setOdontogramUpdates] = useState<any[]>([]);
+  const [isOdontogramModalOpen, setIsOdontogramModalOpen] = useState(false);
+  const [selectedToothForModal, setSelectedToothForModal] = useState<{ number: string, position: string } | null>(null);
+  const [isFinishConfirmOpen, setIsFinishConfirmOpen] = useState(false);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -74,27 +77,8 @@ export default function DoctorPatientDetail() {
   }, [appointment?.master_pasien?.id_pasien]);
 
   const handleSelectTooth = (toothNumber: string, position: string) => {
-    const condition = prompt("Masukkan kondisi baru (Normal/Karies/Tambalan/Gigi Tiruan/Missing/Perawatan Saluran Akar):", "Karies");
-    if (condition) {
-       let color = '#FFFFFF';
-       switch(condition.toLowerCase()) {
-         case 'karies': color = '#ef4444'; break;
-         case 'tambalan': color = '#3b82f6'; break;
-         case 'gigi tiruan': color = '#eab308'; break;
-         case 'missing': color = '#000000'; break;
-         case 'perawatan saluran akar': color = '#22c55e'; break;
-         default: color = '#FFFFFF';
-       }
-       const update = { nomor_gigi: toothNumber, posisi_gigi: position, kondisi_gigi: condition, warna_odontogram: color };
-       setOdontogramData(prev => {
-          const filtered = prev.filter(p => !(p.nomor_gigi === toothNumber && p.posisi_gigi === position));
-          return [...filtered, update];
-       });
-       setOdontogramUpdates(prev => {
-          const filtered = prev.filter(p => !(p.nomor_gigi === toothNumber && p.posisi_gigi === position));
-          return [...filtered, update];
-       });
-    }
+    setSelectedToothForModal({ number: toothNumber, position: position });
+    setIsOdontogramModalOpen(true);
   };
 
   const handleAnalyze = async () => {
@@ -143,9 +127,12 @@ export default function DoctorPatientDetail() {
     setPrescriptions(prescriptions.filter((_, i) => i !== index));
   };
 
-  const handleFinish = async () => {
-    if (!window.confirm("Simpan laporan dan selesaikan antrian pasien ini?")) return;
+  const handleFinishClick = () => {
+    setIsFinishConfirmOpen(true);
+  };
 
+  const executeFinish = async () => {
+    setIsFinishConfirmOpen(false);
     setIsSaving(true);
     try {
       const payload = {
@@ -622,7 +609,7 @@ export default function DoctorPatientDetail() {
                           Kembali
                         </Button>
                         <Button 
-                          onClick={handleFinish} 
+                          onClick={handleFinishClick} 
                           disabled={isSaving}
                           className="w-2/3 bg-green-500 hover:bg-green-600 text-white font-black py-6 rounded-2xl shadow-xl shadow-green-200 transition-all uppercase tracking-widest text-xs flex items-center justify-center gap-2"
                         >
@@ -640,6 +627,88 @@ export default function DoctorPatientDetail() {
             </div>
           </div>
       </div>
+
+       {/* Custom Modals */}
+       {isOdontogramModalOpen && selectedToothForModal && (
+         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+           <div className="bg-white rounded-[2rem] border-2 border-blue-600 shadow-2xl p-8 max-w-md w-full space-y-6 animate-fade-in-slide-down">
+             <div className="flex justify-between items-center border-b border-blue-100 pb-3">
+               <h3 className="text-lg font-black text-blue-900 uppercase italic">Update Gigi {selectedToothForModal.number} ({selectedToothForModal.position})</h3>
+               <button onClick={() => { setIsOdontogramModalOpen(false); setSelectedToothForModal(null); }} className="text-slate-400 hover:text-slate-600">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+               </button>
+             </div>
+             
+             <div className="grid grid-cols-2 gap-3">
+               {[
+                 { name: 'Normal', color: '#FFFFFF', bg: 'bg-white border-2 border-slate-200 text-slate-800 hover:bg-slate-50' },
+                 { name: 'Karies', color: '#ef4444', bg: 'bg-red-500 text-white hover:bg-red-600' },
+                 { name: 'Tambalan', color: '#3b82f6', bg: 'bg-blue-500 text-white hover:bg-blue-600' },
+                 { name: 'Gigi Tiruan', color: '#eab308', bg: 'bg-yellow-500 text-white hover:bg-yellow-600' },
+                 { name: 'Missing', color: '#000000', bg: 'bg-black text-white hover:bg-zinc-900' },
+                 { name: 'Perawatan Saluran Akar', color: '#22c55e', bg: 'bg-green-500 text-white hover:bg-green-600' }
+               ].map((cond) => (
+                 <button
+                   key={cond.name}
+                   onClick={() => {
+                     const toothNumber = selectedToothForModal.number;
+                     const position = selectedToothForModal.position;
+                     const condition = cond.name;
+                     const color = cond.color;
+                     
+                     const update = { nomor_gigi: toothNumber, posisi_gigi: position, kondisi_gigi: condition, warna_odontogram: color };
+                     setOdontogramData(prev => {
+                        const filtered = prev.filter(p => !(p.nomor_gigi === toothNumber && p.posisi_gigi === position));
+                        return [...filtered, update];
+                     });
+                     setOdontogramUpdates(prev => {
+                        const filtered = prev.filter(p => !(p.nomor_gigi === toothNumber && p.posisi_gigi === position));
+                        return [...filtered, update];
+                     });
+                     setIsOdontogramModalOpen(false);
+                     setSelectedToothForModal(null);
+                     toast({
+                       title: "Kondisi Gigi Diperbarui",
+                       description: `Gigi ${toothNumber} (${position}) diatur ke ${condition}.`,
+                     });
+                   }}
+                   className={`py-3 px-4 rounded-xl font-bold text-xs text-center shadow transition-all hover:scale-[1.03] active:scale-95 ${cond.bg}`}
+                 >
+                   {cond.name}
+                 </button>
+               ))}
+             </div>
+           </div>
+         </div>
+       )}
+
+       {isFinishConfirmOpen && (
+         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+           <div className="bg-white rounded-[2rem] border-2 border-blue-600 shadow-2xl p-8 max-w-md w-full space-y-6 text-center animate-fade-in-slide-down">
+             <div className="h-16 w-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto shadow-inner animate-pulse">
+               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+             </div>
+             <div className="space-y-2">
+               <h3 className="text-xl font-black text-blue-900 uppercase italic">Konfirmasi Selesai</h3>
+               <p className="text-slate-500 font-semibold text-sm">Apakah Anda yakin ingin menyimpan laporan pemeriksaan dan menyelesaikan antrian pasien ini?</p>
+             </div>
+             <div className="flex gap-4">
+               <button
+                 onClick={() => setIsFinishConfirmOpen(false)}
+                 className="w-1/2 bg-white border-2 border-blue-600 text-blue-600 font-black py-3.5 rounded-xl uppercase tracking-widest text-xs hover:bg-blue-50 transition-colors"
+               >
+                 Batal
+               </button>
+               <button
+                 onClick={executeFinish}
+                 className="w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-black py-3.5 rounded-xl shadow-lg shadow-blue-200 uppercase tracking-widest text-xs transition-colors"
+               >
+                 Ya, Selesaikan
+               </button>
+             </div>
+           </div>
+         </div>
+       )}
     </div>
   );
 }

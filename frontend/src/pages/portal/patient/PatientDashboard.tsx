@@ -150,7 +150,7 @@ export default function PatientDashboard() {
 
       <div className="flex flex-col lg:flex-row justify-center items-stretch gap-8 pt-6 px-6 pb-16 max-w-6xl mx-auto w-full relative z-10">
         {/* Reservation Card */}
-        <div className="w-full max-w-sm bg-white rounded-[2.5rem] shadow-xl shadow-slate-100/60 p-10 flex flex-col items-center text-center border border-slate-100 hover:border-blue-500 hover:shadow-blue-100/40 transform hover:translate-y-[-8px] transition-all duration-300 relative group mx-auto overflow-hidden">
+        <div className="w-full max-w-sm bg-white rounded-[2.5rem] shadow-xl shadow-slate-100/60 p-10 flex flex-col items-center text-center border border-slate-100 hover:border-blue-500 hover:shadow-blue-100/40 transform hover:translate-y-[-8px] transition-all duration-300 relative group mx-auto overflow-hidden animate-fade-in animation-delay-100">
           <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
           <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-[2rem] mb-6 shadow-lg shadow-blue-100 group-hover:scale-105 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-95">
@@ -171,7 +171,7 @@ export default function PatientDashboard() {
         </div>
 
         {/* View Queue Card */}
-        <div className="w-full max-w-sm bg-white rounded-[2.5rem] shadow-xl shadow-slate-100/60 p-10 flex flex-col items-center text-center border border-slate-100 hover:border-blue-500 hover:shadow-blue-100/40 transform hover:translate-y-[-8px] transition-all duration-300 relative group mx-auto overflow-hidden">
+        <div className="w-full max-w-sm bg-white rounded-[2.5rem] shadow-xl shadow-slate-100/60 p-10 flex flex-col items-center text-center border border-slate-100 hover:border-blue-500 hover:shadow-blue-100/40 transform hover:translate-y-[-8px] transition-all duration-300 relative group mx-auto overflow-hidden animate-fade-in animation-delay-200">
           <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
           <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-[2rem] mb-6 shadow-lg shadow-blue-100 group-hover:scale-105 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-95">
@@ -192,7 +192,7 @@ export default function PatientDashboard() {
         </div>
 
         {/* Medical Record Card */}
-        <div className="w-full max-w-sm bg-white rounded-[2.5rem] shadow-xl shadow-slate-100/60 p-10 flex flex-col items-center text-center border border-slate-100 hover:border-blue-500 hover:shadow-blue-100/40 transform hover:translate-y-[-8px] transition-all duration-300 relative group mx-auto overflow-hidden">
+        <div className="w-full max-w-sm bg-white rounded-[2.5rem] shadow-xl shadow-slate-100/60 p-10 flex flex-col items-center text-center border border-slate-100 hover:border-blue-500 hover:shadow-blue-100/40 transform hover:translate-y-[-8px] transition-all duration-300 relative group mx-auto overflow-hidden animate-fade-in animation-delay-300">
           <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
           <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-[2rem] mb-6 shadow-lg shadow-blue-100 group-hover:scale-105 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-95">
@@ -229,7 +229,7 @@ export default function PatientDashboard() {
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 -translate-y-1/2 z-0 hidden md:block"></div>
 
           {/* Step 1 */}
-          <div className="bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2rem] p-8 relative z-10 shadow-lg shadow-slate-100/40 hover:shadow-xl hover:shadow-blue-100/50 transition-all duration-300 group flex flex-col justify-between">
+          <div className="bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2rem] p-8 relative z-10 shadow-lg shadow-slate-100/40 hover:shadow-xl hover:shadow-blue-100/50 transition-all duration-300 group flex flex-col justify-between animate-fade-in animation-delay-100">
             <div>
               <div className="h-14 w-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                 01
@@ -242,7 +242,7 @@ export default function PatientDashboard() {
           </div>
 
           {/* Step 2 */}
-          <div className="bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2rem] p-8 relative z-10 shadow-lg shadow-slate-100/40 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 group flex flex-col justify-between">
+          <div className="bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2rem] p-8 relative z-10 shadow-lg shadow-slate-100/40 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 group flex flex-col justify-between animate-fade-in animation-delay-200">
             <div>
               <div className="h-14 w-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
                 02
@@ -255,7 +255,7 @@ export default function PatientDashboard() {
           </div>
 
           {/* Step 3 */}
-          <div className="bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2rem] p-8 relative z-10 shadow-lg shadow-slate-100/40 hover:shadow-xl hover:shadow-purple-100/50 transition-all duration-300 group flex flex-col justify-between">
+          <div className="bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2rem] p-8 relative z-10 shadow-lg shadow-slate-100/40 hover:shadow-xl hover:shadow-purple-100/50 transition-all duration-300 group flex flex-col justify-between animate-fade-in animation-delay-300">
             <div>
               <div className="h-14 w-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
                 03
@@ -359,7 +359,6 @@ export default function PatientDashboard() {
                       +62 878-3859-••••
                     </a>
                   </p>
-                  <p className="text-xs font-semibold text-slate-400">Email: info@sigigi.id</p>
                 </div>
               </div>
             </div>

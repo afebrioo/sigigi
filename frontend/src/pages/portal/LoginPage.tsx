@@ -261,12 +261,6 @@ export default function PortalLoginPage() {
               </div>
             </div>
 
-            <div className="text-right">
-              <Link to="/portal/forgot-password" className="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                Lupa Password?
-              </Link>
-            </div>
-
             <button
               type="submit"
               disabled={isLoading}

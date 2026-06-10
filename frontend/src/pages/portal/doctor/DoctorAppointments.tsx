@@ -13,6 +13,7 @@ export default function DoctorAppointments() {
   const [clinics, setClinics] = useState<any[]>([]);
   const [selectedClinicId, setSelectedClinicId] = useState<string>('1');
   const [isLoading, setIsLoading] = useState(true);
+  const [isCancelConfirmOpen, setIsCancelConfirmOpen] = useState(false);
 
   const fetchAppointments = async () => {
     setIsLoading(true);
@@ -76,7 +77,7 @@ export default function DoctorAppointments() {
     return date.toLocaleTimeString('en-GB', { hour12: false });
   };
 
-  const handleCancel = async () => {
+  const handleCancelClick = () => {
     if (!selectedId) {
       toast({
         title: "Pilih Pasien",
@@ -85,37 +86,39 @@ export default function DoctorAppointments() {
       });
       return;
     }
+    setIsCancelConfirmOpen(true);
+  };
 
-    if (window.confirm("Apakah Anda yakin ingin membatalkan appointment ini?")) {
-      try {
-        const response = await fetch(`${api.appointments}/${selectedId}`, {
-          method: 'PUT',
-          headers: getDefaultHeaders(),
-          body: JSON.stringify({ status: 'cancelled' })
-        });
+  const executeCancel = async () => {
+    setIsCancelConfirmOpen(false);
+    try {
+      const response = await fetch(`${api.appointments}/${selectedId}`, {
+        method: 'PUT',
+        headers: getDefaultHeaders(),
+        body: JSON.stringify({ status: 'cancelled' })
+      });
 
-        if (response.ok) {
-          setAllAppointments(prev => prev.filter(a => a.id !== selectedId));
-          setSelectedId(null);
-          toast({
-            title: "Appointment Dibatalkan",
-            description: "Janji temu pasien berhasil dibatalkan.",
-          });
-        } else {
-          const errData = await response.json();
-          toast({
-            title: "Gagal Membatalkan",
-            description: "Gagal membatalkan: " + (errData.message || 'Error Unknown'),
-            variant: "destructive"
-          });
-        }
-      } catch (error: any) {
+      if (response.ok) {
+        setAllAppointments(prev => prev.filter(a => a.id !== selectedId));
+        setSelectedId(null);
         toast({
-          title: "Terjadi Kesalahan",
-          description: error.message,
+          title: "Appointment Dibatalkan",
+          description: "Janji temu pasien berhasil dibatalkan.",
+        });
+      } else {
+        const errData = await response.json();
+        toast({
+          title: "Gagal Membatalkan",
+          description: "Gagal membatalkan: " + (errData.message || 'Error Unknown'),
           variant: "destructive"
         });
       }
+    } catch (error: any) {
+      toast({
+        title: "Terjadi Kesalahan",
+        description: error.message,
+        variant: "destructive"
+      });
     }
   };
 
@@ -323,7 +326,7 @@ export default function DoctorAppointments() {
 
           <button
             disabled={!selectedId}
-            onClick={handleCancel}
+            onClick={handleCancelClick}
             className={`flex items-center gap-4 font-black py-4 px-10 rounded-[2rem] shadow-lg transition-all transform border-2 ${selectedId
               ? 'bg-red-50 hover:bg-red-100 text-red-600 border-red-200 hover:translate-y-[-2px] active:translate-y-0 shadow-red-50'
               : 'bg-gray-100 text-gray-300 border-transparent cursor-not-allowed opacity-50'
@@ -337,6 +340,33 @@ export default function DoctorAppointments() {
           </button>
         </div>
 
+        {isCancelConfirmOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+            <div className="bg-white rounded-[2rem] border-2 border-red-600 shadow-2xl p-8 max-w-md w-full space-y-6 text-center animate-fade-in-slide-down">
+              <div className="h-16 w-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-black text-red-900 uppercase italic">Batalkan Appointment</h3>
+                <p className="text-slate-500 font-semibold text-sm">Apakah Anda yakin ingin membatalkan janji temu pasien ini? Tindakan ini tidak dapat dibatalkan.</p>
+              </div>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setIsCancelConfirmOpen(false)}
+                  className="w-1/2 bg-white border-2 border-red-600 text-red-600 font-black py-3.5 rounded-xl uppercase tracking-widest text-xs hover:bg-red-50 transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={executeCancel}
+                  className="w-1/2 bg-red-600 hover:bg-red-700 text-white font-black py-3.5 rounded-xl shadow-lg shadow-red-200 uppercase tracking-widest text-xs transition-colors"
+                >
+                  Ya, Batalkan
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
   );
 }

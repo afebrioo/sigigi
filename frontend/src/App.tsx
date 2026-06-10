@@ -27,8 +27,6 @@ import DokterKlinikPage from './pages/dokter-klinik/DokterKlinikPage'
 // =============================================
 import PortalLoginPage from '@/pages/portal/LoginPage'
 import PortalRegisterPage from '@/pages/portal/RegisterPage'
-import PortalForgotPasswordPage from '@/pages/portal/ForgotPasswordPage'
-import PortalResetPasswordPage from '@/pages/portal/ResetPasswordPage'
 import GoogleCompleteRegisterPage from '@/pages/portal/GoogleCompleteRegisterPage'
 
 // Portal - Patient Pages
@@ -98,8 +96,6 @@ function App() {
           {/* Auth Portal */}
           <Route path="/portal/login" element={<PortalLoginPage />} />
           <Route path="/portal/register" element={<PortalRegisterPage />} />
-          <Route path="/portal/forgot-password" element={<PortalForgotPasswordPage />} />
-          <Route path="/portal/reset-password" element={<PortalResetPasswordPage />} />
           <Route path="/portal/google-complete-register" element={<GoogleCompleteRegisterPage />} />
 
           {/* Patient Portal Routes */}
