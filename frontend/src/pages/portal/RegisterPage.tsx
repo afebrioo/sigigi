@@ -92,7 +92,17 @@ export default function PortalRegisterPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || result.message || 'Gagal registrasi.');
+        let errorMsg = 'Gagal registrasi.';
+        if (result.message) {
+          errorMsg = result.message;
+        } else if (result.error) {
+          if (typeof result.error === 'object') {
+            errorMsg = Object.values(result.error).flat().join(', ');
+          } else {
+            errorMsg = String(result.error);
+          }
+        }
+        throw new Error(errorMsg);
       }
 
       setMessage({ type: 'success', text: 'Registrasi berhasil! Silakan login.' });

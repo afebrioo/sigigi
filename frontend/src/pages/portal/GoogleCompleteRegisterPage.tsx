@@ -77,7 +77,17 @@ export default function GoogleCompleteRegisterPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || result.message || 'Registrasi gagal.');
+        let errorMsg = 'Registrasi gagal.';
+        if (result.message) {
+          errorMsg = result.message;
+        } else if (result.error) {
+          if (typeof result.error === 'object') {
+            errorMsg = Object.values(result.error).flat().join(', ');
+          } else {
+            errorMsg = String(result.error);
+          }
+        }
+        throw new Error(errorMsg);
       }
 
       setMessage({ type: 'success', text: 'Registrasi Berhasil! Mengalihkan ke Dashboard...' });

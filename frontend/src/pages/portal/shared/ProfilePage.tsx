@@ -90,7 +90,17 @@ export default function ProfilePage() {
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || result.error || 'Gagal memperbarui profil.');
+        let errorMsg = 'Gagal memperbarui profil.';
+        if (result.message) {
+          errorMsg = result.message;
+        } else if (result.error) {
+          if (typeof result.error === 'object') {
+            errorMsg = Object.values(result.error).flat().join(', ');
+          } else {
+            errorMsg = String(result.error);
+          }
+        }
+        throw new Error(errorMsg);
       }
 
       setMessage({ type: 'success', text: 'Profil berhasil diperbarui!' });
@@ -136,7 +146,17 @@ export default function ProfilePage() {
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || result.error || 'Gagal memperbarui kata sandi.');
+        let errorMsg = 'Gagal memperbarui kata sandi.';
+        if (result.message) {
+          errorMsg = result.message;
+        } else if (result.error) {
+          if (typeof result.error === 'object') {
+            errorMsg = Object.values(result.error).flat().join(', ');
+          } else {
+            errorMsg = String(result.error);
+          }
+        }
+        throw new Error(errorMsg);
       }
 
       setMessage({ type: 'success', text: 'Kata sandi berhasil diperbarui!' });
