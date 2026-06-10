@@ -22,7 +22,7 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${dark ? 'bg-[#030712] text-white' : 'bg-slate-50/20'} relative font-sans transition-colors duration-300 overflow-hidden`}>
+    <div className={`min-h-screen flex flex-col ${dark ? 'bg-[#030712] text-white' : 'bg-slate-50/20'} relative font-sans transition-colors duration-300 overflow-x-hidden`}>
       {/* Top Header */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-gradient-to-r from-blue-900/90 via-indigo-800/90 to-purple-900/90 px-6 py-3.5 flex items-center justify-between border-b border-indigo-900/40 shadow-lg transition-all duration-300">
         {/* Left: Logo & Nav */}
@@ -172,53 +172,52 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
             </div>
           )}
         </div>
+        {/* Mobile Drawer Menu */}
+        {role !== 'doctor' && isMobileMenuOpen && (
+          <div className="md:hidden backdrop-blur-xl bg-blue-900/95 border-b border-indigo-500/20 shadow-2xl rounded-b-[2rem] px-6 py-6 space-y-2 absolute top-full left-0 w-full z-50 animate-fade-in-slide-down">
+            <Link
+              to="/portal/patient-dashboard"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
+            >
+              <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <span className="tracking-wide">Home</span>
+            </Link>
+            <Link
+              to="/portal/appointments"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
+            >
+              <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <span className="tracking-wide">Appointment</span>
+            </Link>
+            <Link
+              to="/portal/queue"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
+            >
+              <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <span className="tracking-wide">Antrian</span>
+            </Link>
+            <Link
+              to="/portal/history"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
+            >
+              <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <span className="tracking-wide">Rekam Medis</span>
+            </Link>
+          </div>
+        )}
       </header>
-
-      {/* Mobile Drawer Menu */}
-      {role !== 'doctor' && isMobileMenuOpen && (
-        <div className="md:hidden backdrop-blur-xl bg-blue-900/95 border-b border-indigo-500/20 shadow-2xl rounded-b-[2rem] px-6 py-6 space-y-2 absolute w-full z-45 animate-fade-in-slide-down">
-          <Link
-            to="/portal/patient-dashboard"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
-          >
-            <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            </div>
-            <span className="tracking-wide">Home</span>
-          </Link>
-          <Link
-            to="/portal/appointments"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
-          >
-            <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </div>
-            <span className="tracking-wide">Appointment</span>
-          </Link>
-          <Link
-            to="/portal/queue"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
-          >
-            <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <span className="tracking-wide">Antrian</span>
-          </Link>
-          <Link
-            to="/portal/history"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-4 text-white font-bold hover:bg-white/10 p-3 rounded-2xl transition-all duration-300 group"
-          >
-            <div className="bg-white/10 rounded-xl p-2 group-hover:bg-white group-hover:text-blue-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <span className="tracking-wide">Rekam Medis</span>
-          </Link>
-        </div>
-      )}
 
       {/* Main Content */}
       <main className="flex-grow relative z-10 p-6 pb-16">
