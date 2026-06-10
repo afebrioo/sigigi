@@ -414,8 +414,10 @@ class AppointmentController extends Controller
                 }
 
                 // Insert Prescriptions (Resep)
+                $resepCounter = 1;
                 foreach ($prescriptions as $resep) {
                     \App\Models\ResepTindakan::create([
+                        'id_resep_tindakan' => $resepCounter++,
                         'id_rekam_medis' => $rekamMedis->id_rekam_medis,
                         'id_obat'        => $resep['id_obat'] ?? null,
                         'jumlah'         => $resep['jumlah'] ?? 1,
