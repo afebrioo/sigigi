@@ -81,13 +81,24 @@ Cara paling gampang untuk memindahkan kode dari laptop Windows Anda ke Linux ada
 
 ## 4. Install Semua Program yang Dibutuhkan Server
 
-Server Linux masih kosong, jadi kita harus menginstal "XAMPP" versi Linux yang terdiri dari: **Nginx** (pengganti Apache), **MySQL**, **PHP**, dan **Python** (untuk AI).
+Server Linux masih kosong, jadi kita harus menginstal "XAMPP" versi Linux yang terdiri dari: **Nginx** (pengganti Apache), **MySQL**, **PHP 8.2**, dan **Python** (untuk AI).
 
-Jalankan perintah ini di Linux (Copy-Paste lalu Enter):
+Karena menggunakan Ubuntu 22.04, kita perlu menambahkan repositori PPA Ondrej agar bisa mengunduh PHP 8.2 dengan lancar. Jalankan perintah ini di terminal VPS (Copy-Paste lalu Enter):
+
 ```bash
+# 1. Update sistem & install dependency software-properties
 sudo apt update && sudo apt upgrade -y
+sudo apt install software-properties-common -y
+
+# 2. Tambahkan Repositori PHP Ondrej
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update
+
+# 3. Install Nginx, MySQL, Python, Docker, dll.
 sudo apt install nginx mysql-server python3 python3-pip python3-venv docker.io docker-compose curl unzip -y
-sudo apt install php8.2-fpm php8.2-mysql php8.2-xml php8.2-mbstring php8.2-curl php8.2-zip -y
+
+# 4. Install PHP 8.2 dan ekstensi yang dibutuhkan Laravel
+sudo apt install php8.2-fpm php8.2-mysql php8.2-xml php8.2-mbstring php8.2-curl php8.2-zip php8.2-gd php8.2-cli -y
 ```
 
 ---

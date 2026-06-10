@@ -112,7 +112,7 @@ export default function PortalLoginPage() {
       const google = (window as any).google;
       if (google) {
         google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '500732389360-15s1q147p42k5q4o9qf963a863gspq6b.apps.googleusercontent.com', // Dynamic Google Client ID from .env with demo fallback
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '589393665351-6qbq6d2gfins5bsvid1qjb7vm4khg5o3.apps.googleusercontent.com', // Dynamic Google Client ID from .env with demo fallback
           callback: handleGoogleLoginSuccess
         });
 
