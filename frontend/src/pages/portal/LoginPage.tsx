@@ -296,21 +296,8 @@ export default function PortalLoginPage() {
                     Daftar
                   </Link>
                 </p>
-                <div>
-                  <Link to="/auth/login" className="text-xs text-slate-400 hover:text-slate-600 hover:underline font-medium">
-                    Masuk sebagai Staf Klinik
-                  </Link>
-                </div>
               </div>
             </>
-          )}
-
-          {!window.location.pathname.startsWith('/portal') && (
-            <div className="mt-6 text-center">
-              <Link to="/portal/login" className="text-xs text-slate-400 hover:text-slate-600 hover:underline font-medium">
-                Masuk sebagai Pasien
-              </Link>
-            </div>
           )}
         </div>
       </div>

@@ -5,10 +5,14 @@ import { checkProfileCompleteness } from '../LoginPage';
 
 export default function PatientDashboard() {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isComplete, setIsComplete] = useState(true);
   const [selectedBranch, setSelectedBranch] = useState<'cibadak' | 'lembang'>('cibadak');
 
   useEffect(() => {
+    const isAuth = localStorage.getItem('portal_isAuthenticated') === 'true';
+    setIsAuthenticated(isAuth);
+
     const userStr = localStorage.getItem('portal_user');
     if (userStr) {
       try {
@@ -23,8 +27,8 @@ export default function PatientDashboard() {
   }, []);
 
   const handleProtectedAction = (path: string) => {
-    const isAuthenticated = localStorage.getItem('portal_isAuthenticated') === 'true';
-    if (isAuthenticated) {
+    const isAuth = localStorage.getItem('portal_isAuthenticated') === 'true';
+    if (isAuth) {
       if (path === '/portal/appointments/new' && !isComplete) {
         navigate('/portal/profile', { state: { showIncompleteWarning: true } });
         return;
@@ -89,7 +93,22 @@ export default function PatientDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-6 relative z-10">
-        {!isComplete && (
+        {!isAuthenticated && (
+          <div className="bg-amber-50 border-2 border-amber-300 rounded-[2rem] p-6 flex flex-col sm:flex-row items-center gap-4 text-amber-900 shadow-lg shadow-amber-100/50 animate-pulse">
+            <div className="h-12 w-12 rounded-2xl bg-amber-500 flex items-center justify-center text-white shadow-md flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div className="flex-1 text-center sm:text-left space-y-1">
+              <h4 className="font-black uppercase text-xs tracking-wider italic text-amber-900">Peringatan: Anda Belum Login!</h4>
+              <p className="text-sm font-bold opacity-90">Silakan login terlebih dahulu untuk membuat janji temu baru.</p>
+            </div>
+            <Link to="/portal/login" className="bg-amber-600 hover:bg-amber-700 text-white font-black px-6 py-3 rounded-xl shadow transition-all transform active:scale-95 uppercase tracking-widest text-xs flex-shrink-0">
+              Login Sekarang
+            </Link>
+          </div>
+        )}
+
+        {isAuthenticated && !isComplete && (
           <div className="bg-amber-50 border-2 border-amber-300 rounded-[2rem] p-6 flex flex-col sm:flex-row items-center gap-4 text-amber-900 shadow-lg shadow-amber-100/50 animate-pulse">
             <div className="h-12 w-12 rounded-2xl bg-amber-500 flex items-center justify-center text-white shadow-md flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -163,7 +182,7 @@ export default function PatientDashboard() {
             </svg>
           </div>
           <h2 className="text-2xl font-black text-blue-950 mb-2 tracking-tight italic uppercase group-hover:text-blue-600 transition-colors">Antrian</h2>
-          <p className="text-slate-400 font-bold mb-8 italic text-xs leading-relaxed">Cek status antrian klinik hari ini secara real-time</p>
+          <p className="text-slate-400 font-bold mb-8 italic text-xs leading-relaxed">Cek status antrian klinik hari ini</p>
           <button
             onClick={() => navigate('/portal/queue')}
             className="w-full mt-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black py-4 px-8 rounded-2xl shadow-lg shadow-blue-100 hover:shadow-blue-200/50 transition-all transform hover:scale-[1.02] active:scale-98 uppercase tracking-widest text-xs"
