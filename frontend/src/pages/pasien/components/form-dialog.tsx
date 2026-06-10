@@ -35,7 +35,6 @@ const formSchema = z.object({
   id_klinik: z.number().min(1, "Klinik harus dipilih"),
   no_rekam_medis: z.string().min(1, "No Rekam Medis harus diisi"),
   nama_lengkap: z.string().min(3, "Nama lengkap minimal 3 karakter").max(100, "Nama lengkap maksimal 100 karakter"),
-  nik: z.string().optional().default(""),
   tempat_lahir: z.string().optional().default(""),
   tanggal_lahir: z.string().optional().default(""),
   jenis_kelamin: z.enum(["L", "P"]).nullable().optional(),
@@ -58,7 +57,6 @@ interface FormDialogProps {
     id_klinik: number
     no_rekam_medis: string
     nama_lengkap: string
-    nik: string
     tempat_lahir: string
     tanggal_lahir: string
     jenis_kelamin: 'L' | 'P' | null
@@ -89,7 +87,6 @@ export function FormDialog({
       id_klinik: klinikList.length > 0 ? klinikList[0].id_klinik : 1,
       no_rekam_medis: "",
       nama_lengkap: "",
-      nik: "",
       tempat_lahir: "",
       tanggal_lahir: "",
       jenis_kelamin: null,
@@ -132,7 +129,6 @@ export function FormDialog({
         id_klinik: defaultKlinikId,
         no_rekam_medis: "",
         nama_lengkap: "",
-        nik: "",
         tempat_lahir: "",
         tanggal_lahir: "",
         jenis_kelamin: null,
@@ -267,20 +263,6 @@ export function FormDialog({
                 )}
               />
 
-              {/* NIK */}
-              <FormField
-                control={form.control}
-                name="nik"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>NIK</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Masukkan NIK" {...field} disabled={loading} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
               {/* Tempat Lahir */}
               <FormField

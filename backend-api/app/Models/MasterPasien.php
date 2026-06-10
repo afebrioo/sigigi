@@ -15,7 +15,6 @@ class MasterPasien extends Model
         'id_klinik',
         'no_rekam_medis',
         'nama_lengkap',
-        'nik',
         'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',

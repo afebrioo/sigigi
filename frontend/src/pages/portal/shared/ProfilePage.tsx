@@ -9,7 +9,6 @@ export default function ProfilePage() {
     name: '',
     email: '',
     phone: '',
-    nik: '',
     tempatLahir: '',
     tanggalLahir: '',
     jenisKelamin: '',
@@ -45,7 +44,6 @@ export default function ProfilePage() {
           name: user.full_name || user.nama_lengkap || '',
           email: user.email || '',
           phone: user.phone_number || user.phone || bio.telepon || '',
-          nik: bio.nik || '',
           tempatLahir: bio.tempat_lahir || '',
           tanggalLahir: bio.tanggal_lahir || '',
           jenisKelamin: bio.jenis_kelamin || '',
@@ -79,7 +77,6 @@ export default function ProfilePage() {
         body: JSON.stringify({
           nama_lengkap: formData.name,
           phone: formData.phone,
-          nik: formData.nik,
           tempat_lahir: formData.tempatLahir,
           tanggal_lahir: formData.tanggalLahir,
           jenis_kelamin: formData.jenisKelamin,
@@ -124,7 +121,6 @@ export default function ProfilePage() {
         body: JSON.stringify({
           nama_lengkap: formData.name,
           phone: formData.phone,
-          nik: formData.nik,
           tempat_lahir: formData.tempatLahir,
           tanggal_lahir: formData.tanggalLahir,
           jenis_kelamin: formData.jenisKelamin,
@@ -172,7 +168,7 @@ export default function ProfilePage() {
               <h3 className="text-sm font-black uppercase tracking-wider italic">Mohon Lengkapi Profil Anda</h3>
               <p className="text-sm font-bold opacity-90 leading-relaxed">
                 Anda baru saja login (atau mendaftar melalui Google) dan memiliki data diri yang belum lengkap di klinik kami. 
-                Sistem mengharuskan pengisian **NIK, Tempat & Tanggal Lahir, Jenis Kelamin, Alamat Domisili, dan Nomor HP** sebelum Anda diizinkan untuk menjadwalkan kunjungan dokter (appointment).
+                Sistem mengharuskan pengisian **Tempat & Tanggal Lahir, Jenis Kelamin, Alamat Domisili, dan Nomor HP** sebelum Anda diizinkan untuk menjadwalkan kunjungan dokter (appointment).
               </p>
             </div>
           </div>
@@ -244,17 +240,6 @@ export default function ProfilePage() {
                       />
                     </div>
 
-                    <div className="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100 space-y-2">
-                      <label className="block text-[10px] font-black uppercase text-blue-400 tracking-[0.2em] italic ml-2">NIK (No. KTP)</label>
-                      <input
-                        type="text"
-                        name="nik"
-                        value={formData.nik}
-                        onChange={handleChange}
-                        className="w-full bg-transparent text-blue-900 font-bold outline-none"
-                        required
-                      />
-                    </div>
 
                     <div className="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100 space-y-2">
                       <label className="block text-[10px] font-black uppercase text-blue-400 tracking-[0.2em] italic ml-2">Tempat Lahir</label>

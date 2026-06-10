@@ -188,7 +188,6 @@ class AppointmentController extends Controller
                 'action_type'      => 'nullable|string',
                 'questionnaire'    => 'nullable|array',
                 'image_url'        => 'nullable|string',
-                'nik'              => 'nullable|string',
                 'email'            => 'nullable|email',
                 'tempat_lahir'     => 'nullable|string',
                 'golongan_darah'   => 'nullable|string',
@@ -552,7 +551,6 @@ class AppointmentController extends Controller
             'id_klinik' => $appointment->id_klinik ?? 1,
         ];
 
-        if (!empty($extraData['nik'])) $data['nik'] = $extraData['nik'];
         if (!empty($extraData['tempat_lahir'])) $data['tempat_lahir'] = $extraData['tempat_lahir'];
         if (!empty($extraData['golongan_darah'])) $data['golongan_darah'] = $extraData['golongan_darah'];
         if (!empty($extraData['email'])) $data['email'] = $extraData['email'];

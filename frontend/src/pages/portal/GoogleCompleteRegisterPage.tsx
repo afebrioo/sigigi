@@ -14,7 +14,6 @@ export default function GoogleCompleteRegisterPage() {
     email: googleData?.email || '',
     google_id: googleData?.google_id || '',
     phone: '',
-    nik: '',
     tempatLahir: '',
     tanggalLahir: '',
     jenisKelamin: '',
@@ -46,7 +45,7 @@ export default function GoogleCompleteRegisterPage() {
     setMessage(null);
 
     // Frontend Validation
-    if (!formData.phone || !formData.nik || !formData.tempatLahir || !formData.tanggalLahir || !formData.jenisKelamin || !formData.alamat) {
+    if (!formData.phone || !formData.tempatLahir || !formData.tanggalLahir || !formData.jenisKelamin || !formData.alamat) {
       setMessage({ type: 'error', text: 'Harap lengkapi seluruh data diri wajib!' });
       setIsLoading(false);
       return;
@@ -64,7 +63,6 @@ export default function GoogleCompleteRegisterPage() {
           full_name: formData.name,
           google_id: formData.google_id,
           phone: formData.phone,
-          nik: formData.nik,
           tempat_lahir: formData.tempatLahir,
           tanggal_lahir: formData.tanggalLahir,
           jenis_kelamin: formData.jenisKelamin,
@@ -159,32 +157,17 @@ export default function GoogleCompleteRegisterPage() {
           <div className="space-y-6">
             <h3 className="text-xs font-black uppercase text-blue-900 tracking-widest italic border-b-2 border-blue-50 pb-2">1. Biodata Utama (Wajib)</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-[10px] font-black uppercase text-blue-600 ml-4 tracking-[0.2em] italic">NIK (No. KTP)</label>
-                <input
-                  type="text"
-                  name="nik"
-                  required
-                  placeholder="320..."
-                  value={formData.nik}
-                  onChange={handleChange}
-                  className="w-full bg-blue-50 border-2 border-blue-100 focus:border-blue-600 focus:bg-white rounded-2xl px-6 py-4 outline-none transition-all font-bold text-blue-900 shadow-inner"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="block text-[10px] font-black uppercase text-blue-600 ml-4 tracking-[0.2em] italic">Nomor HP Aktif</label>
-                <input
-                  type="text"
-                  name="phone"
-                  required
-                  placeholder="08..."
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full bg-blue-50 border-2 border-blue-100 focus:border-blue-600 focus:bg-white rounded-2xl px-6 py-4 outline-none transition-all font-bold text-blue-900 shadow-inner"
-                />
-              </div>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-black uppercase text-blue-600 ml-4 tracking-[0.2em] italic">Nomor HP Aktif</label>
+              <input
+                type="text"
+                name="phone"
+                required
+                placeholder="08..."
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full bg-blue-50 border-2 border-blue-100 focus:border-blue-600 focus:bg-white rounded-2xl px-6 py-4 outline-none transition-all font-bold text-blue-900 shadow-inner"
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

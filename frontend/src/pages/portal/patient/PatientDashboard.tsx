@@ -115,7 +115,7 @@ export default function PatientDashboard() {
             </div>
             <div className="flex-1 text-center sm:text-left space-y-1">
               <h4 className="font-black uppercase text-xs tracking-wider italic text-amber-900">Peringatan: Profil Belum Lengkap!</h4>
-              <p className="text-sm font-bold opacity-90">Silakan lengkapi data diri Anda (NIK, Tempat Lahir, Tanggal Lahir, Jenis Kelamin, Alamat, dan Nomor HP) untuk dapat melakukan pendaftaran appointment baru.</p>
+              <p className="text-sm font-bold opacity-90">Silakan lengkapi data diri Anda (Tempat Lahir, Tanggal Lahir, Jenis Kelamin, Alamat, dan Nomor HP) untuk dapat melakukan pendaftaran appointment baru.</p>
             </div>
             <Link to="/portal/profile" state={{ showIncompleteWarning: true }} className="bg-amber-600 hover:bg-amber-700 text-white font-black px-6 py-3 rounded-xl shadow transition-all transform active:scale-95 uppercase tracking-widest text-xs flex-shrink-0">
               Lengkapi Sekarang

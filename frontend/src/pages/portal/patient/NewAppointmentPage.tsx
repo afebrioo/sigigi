@@ -20,7 +20,6 @@ export default function NewAppointmentPage() {
     tanggalLahir: '',
     jenisKelamin: '',
     alamat: '',
-    nik: '',
     tempatLahir: '',
     golonganDarah: '',
     nomorHandphone: '',
@@ -52,7 +51,6 @@ export default function NewAppointmentPage() {
             tanggalLahir: user.biodata?.tanggal_lahir || '',
             jenisKelamin: user.biodata?.jenis_kelamin || '',
             alamat: user.biodata?.alamat || '',
-            nik: user.biodata?.nik || '',
             tempatLahir: user.biodata?.tempat_lahir || '',
             golonganDarah: user.biodata?.golongan_darah || '',
             kontakDaruratNama: user.biodata?.kontak_darurat_nama || '',
@@ -186,11 +184,6 @@ export default function NewAppointmentPage() {
               </div>
 
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm border-b border-dashed border-blue-50/50 pb-2">
-                  <span className="text-blue-400 font-bold italic text-xs uppercase tracking-wide">NIK</span>
-                  <span className="text-blue-950 font-black">{formData.nik || '-'}</span>
-                </div>
-
                 <div className="flex justify-between items-center text-sm border-b border-dashed border-blue-50/50 pb-2">
                   <span className="text-blue-400 font-bold italic text-xs uppercase tracking-wide">Jenis Kelamin</span>
                   <span className="text-blue-950 font-black">

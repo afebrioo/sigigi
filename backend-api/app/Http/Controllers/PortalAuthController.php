@@ -19,7 +19,6 @@ class PortalAuthController extends Controller
             'password' => 'required|min:6',
             'full_name' => 'required|string',
             'phone' => 'required|string',
-            'nik' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'nullable|string',
@@ -52,7 +51,6 @@ class PortalAuthController extends Controller
                 'id_klinik' => 1, // Default clinic ID
                 'no_rekam_medis' => $noRekamMedis,
                 'nama_lengkap' => $request->full_name,
-                'nik' => $request->nik,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
@@ -83,7 +81,6 @@ class PortalAuthController extends Controller
                 'full_name' => $user->nama_lengkap,
                 'phone_number' => $user->phone_number,
                 'biodata' => [
-                    'nik' => $pasien->nik,
                     'tempat_lahir' => $pasien->tempat_lahir,
                     'tanggal_lahir' => $pasien->tanggal_lahir ? $pasien->tanggal_lahir->toDateString() : null,
                     'jenis_kelamin' => $pasien->jenis_kelamin,
@@ -128,7 +125,6 @@ class PortalAuthController extends Controller
                 'full_name' => $user->nama_lengkap,
                 'phone_number' => $user->phone_number,
                 'biodata' => $pasien ? [
-                    'nik' => $pasien->nik,
                     'tempat_lahir' => $pasien->tempat_lahir,
                     'tanggal_lahir' => $pasien->tanggal_lahir ? $pasien->tanggal_lahir->toDateString() : null,
                     'jenis_kelamin' => $pasien->jenis_kelamin,
@@ -269,7 +265,6 @@ class PortalAuthController extends Controller
                         'full_name' => $user->nama_lengkap,
                         'phone_number' => $user->phone_number,
                         'biodata' => $pasien ? [
-                            'nik' => $pasien->nik,
                             'tempat_lahir' => $pasien->tempat_lahir,
                             'tanggal_lahir' => $pasien->tanggal_lahir ? $pasien->tanggal_lahir->toDateString() : null,
                             'jenis_kelamin' => $pasien->jenis_kelamin,
@@ -309,7 +304,6 @@ class PortalAuthController extends Controller
             'full_name' => 'required|string',
             'google_id' => 'required|string|unique:users,google_id',
             'phone' => 'required|string',
-            'nik' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'nullable|string',
@@ -343,7 +337,6 @@ class PortalAuthController extends Controller
                 'id_klinik' => 1,
                 'no_rekam_medis' => $noRekamMedis,
                 'nama_lengkap' => $request->full_name,
-                'nik' => $request->nik,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
@@ -374,7 +367,6 @@ class PortalAuthController extends Controller
                 'full_name' => $user->nama_lengkap,
                 'phone_number' => $user->phone_number,
                 'biodata' => [
-                    'nik' => $pasien->nik,
                     'tempat_lahir' => $pasien->tempat_lahir,
                     'tanggal_lahir' => $pasien->tanggal_lahir ? $pasien->tanggal_lahir->toDateString() : null,
                     'jenis_kelamin' => $pasien->jenis_kelamin,
@@ -398,7 +390,6 @@ class PortalAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|string|max:100',
             'phone' => 'required|string|max:20',
-            'nik' => 'required|string|max:16',
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
@@ -441,7 +432,6 @@ class PortalAuthController extends Controller
                     'no_rekam_medis' => $noRekamMedis,
                     'email' => $user->email,
                     'nama_lengkap' => $request->nama_lengkap,
-                    'nik' => $request->nik,
                     'tempat_lahir' => $request->tempat_lahir,
                     'tanggal_lahir' => $request->tanggal_lahir,
                     'jenis_kelamin' => $request->jenis_kelamin,
@@ -455,7 +445,6 @@ class PortalAuthController extends Controller
             } else {
                 $pasien->update([
                     'nama_lengkap' => $request->nama_lengkap,
-                    'nik' => $request->nik,
                     'tempat_lahir' => $request->tempat_lahir,
                     'tanggal_lahir' => $request->tanggal_lahir,
                     'jenis_kelamin' => $request->jenis_kelamin,
@@ -484,7 +473,6 @@ class PortalAuthController extends Controller
                 'full_name' => $user->nama_lengkap,
                 'phone_number' => $user->phone_number,
                 'biodata' => [
-                    'nik' => $pasien->nik,
                     'tempat_lahir' => $pasien->tempat_lahir,
                     'tanggal_lahir' => $pasien->tanggal_lahir ? (\Carbon\Carbon::parse($pasien->tanggal_lahir)->toDateString()) : null,
                     'jenis_kelamin' => $pasien->jenis_kelamin,

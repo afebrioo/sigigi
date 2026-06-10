@@ -11,7 +11,6 @@ export default function PortalRegisterPage() {
     phone: '',
     password: '',
     confirmPassword: '',
-    nik: '',
     tempatLahir: '',
     tanggalLahir: '',
     jenisKelamin: '',
@@ -48,7 +47,7 @@ export default function PortalRegisterPage() {
       setMessage(null);
       setStep(2);
     } else if (step === 2) {
-      if (!formData.nik || !formData.tempatLahir || !formData.tanggalLahir || !formData.jenisKelamin || !formData.alamat) {
+      if (!formData.tempatLahir || !formData.tanggalLahir || !formData.jenisKelamin || !formData.alamat) {
         setMessage({ type: 'error', text: 'Harap lengkapi semua data wajib pada biodata diri!' });
         return;
       }
@@ -78,7 +77,6 @@ export default function PortalRegisterPage() {
           password: formData.password,
           full_name: formData.name,
           phone: formData.phone,
-          nik: formData.nik,
           tempat_lahir: formData.tempatLahir,
           tanggal_lahir: formData.tanggalLahir,
           jenis_kelamin: formData.jenisKelamin,
@@ -229,36 +227,20 @@ export default function PortalRegisterPage() {
         {/* Step 2: Biodata Diri */}
         {step === 2 && (
           <form onSubmit={handleNextStep} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-[10px] font-black uppercase text-blue-600 ml-4 tracking-[0.2em] italic">NIK (16 Digit)</label>
-                <input
-                  type="text"
-                  name="nik"
-                  value={formData.nik}
-                  onChange={handleChange}
-                  maxLength={16}
-                  className="w-full bg-blue-50/50 border-2 border-transparent focus:border-blue-600 focus:bg-white rounded-2xl px-6 py-4 outline-none transition-all font-bold text-blue-900 shadow-inner"
-                  placeholder="Masukkan NIK Pasien"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="block text-[10px] font-black uppercase text-blue-600 ml-4 tracking-[0.2em] italic">Golongan Darah</label>
-                <select
-                  name="golonganDarah"
-                  value={formData.golonganDarah}
-                  onChange={handleChange}
-                  className="w-full bg-blue-50/50 border-2 border-transparent focus:border-blue-600 focus:bg-white rounded-2xl px-6 py-4 outline-none transition-all font-bold text-blue-900 shadow-inner appearance-none"
-                >
-                  <option value="">Pilih Golongan Darah</option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="AB">AB</option>
-                  <option value="O">O</option>
-                </select>
-              </div>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-black uppercase text-blue-600 ml-4 tracking-[0.2em] italic">Golongan Darah</label>
+              <select
+                name="golonganDarah"
+                value={formData.golonganDarah}
+                onChange={handleChange}
+                className="w-full bg-blue-50/50 border-2 border-transparent focus:border-blue-600 focus:bg-white rounded-2xl px-6 py-4 outline-none transition-all font-bold text-blue-900 shadow-inner appearance-none"
+              >
+                <option value="">Pilih Golongan Darah</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="AB">AB</option>
+                <option value="O">O</option>
+              </select>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

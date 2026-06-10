@@ -6,7 +6,7 @@ export interface Pasien {
   id_klinik: number
   no_rekam_medis: string
   nama_lengkap: string
-  nik: string
+  nik?: string
   tempat_lahir: string
   tanggal_lahir: string
   jenis_kelamin: 'L' | 'P' | null

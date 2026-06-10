@@ -8,13 +8,12 @@ export const checkProfileCompleteness = (user: any): boolean => {
   if (!bio) return false;
 
   const isPhoneValid = user.phone_number && user.phone_number.trim() !== '' && user.phone_number !== '1' && user.phone_number !== '-';
-  const isNikValid = bio.nik && bio.nik.trim() !== '' && bio.nik !== '1' && bio.nik !== '-';
   const isTempatLahirValid = bio.tempat_lahir && bio.tempat_lahir.trim() !== '' && bio.tempat_lahir !== '1' && bio.tempat_lahir !== '-';
   const isTanggalLahirValid = bio.tanggal_lahir && bio.tanggal_lahir !== '';
   const isJenisKelaminValid = bio.jenis_kelamin === 'L' || bio.jenis_kelamin === 'P';
   const isAlamatValid = bio.alamat && bio.alamat.trim() !== '' && bio.alamat !== '1' && bio.alamat !== '-';
 
-  return !!(isPhoneValid && isNikValid && isTempatLahirValid && isTanggalLahirValid && isJenisKelaminValid && isAlamatValid);
+  return !!(isPhoneValid && isTempatLahirValid && isTanggalLahirValid && isJenisKelaminValid && isAlamatValid);
 };
 
 export default function PortalLoginPage() {

@@ -106,7 +106,6 @@ class MasterPasienController extends Controller
                 $query->where(function ($q) use ($search) {
                     $q->where('nama_lengkap', 'LIKE', "%{$search}%")
                       ->orWhere('no_rekam_medis', 'LIKE', "%{$search}%")
-                      ->orWhere('nik', 'LIKE', "%{$search}%")
                       ->orWhere('email', 'LIKE', "%{$search}%")
                       ->orWhere('telepon', 'LIKE', "%{$search}%");
                 });
@@ -145,7 +144,6 @@ class MasterPasienController extends Controller
             $validator = Validator::make($request->all(), [
                 'id_klinik' => 'required|exists:klinik,id_klinik',
                 'nama_lengkap' => 'required|max:100',
-                'nik' => 'nullable|max:16',
                 'tempat_lahir' => 'nullable|max:50',
                 'tanggal_lahir' => 'nullable|date',
                 'jenis_kelamin' => 'nullable|in:L,P',
@@ -246,7 +244,6 @@ class MasterPasienController extends Controller
             $validator = Validator::make($request->all(), [
                 'id_klinik' => 'required|exists:klinik,id_klinik',
                 'nama_lengkap' => 'required|max:100',
-                'nik' => 'nullable|max:16',
                 'tempat_lahir' => 'nullable|max:50',
                 'tanggal_lahir' => 'nullable|date',
                 'jenis_kelamin' => 'nullable|in:L,P',
