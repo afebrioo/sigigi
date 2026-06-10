@@ -22,7 +22,7 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${dark ? 'bg-[#030712] text-white' : 'bg-slate-50/20'} relative font-sans transition-colors duration-300 overflow-x-hidden`}>
+    <div className={`min-h-screen flex flex-col ${dark ? 'bg-[#030712] text-white' : 'bg-slate-50/20'} relative font-sans transition-colors duration-300`}>
       {/* Top Header */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-gradient-to-r from-blue-900/90 via-indigo-800/90 to-purple-900/90 px-6 py-3.5 flex items-center justify-between border-b border-indigo-900/40 shadow-lg transition-all duration-300">
         {/* Left: Logo & Nav */}
@@ -220,7 +220,7 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow relative z-10 p-6 pb-16">
+      <main className="flex-grow relative z-10 p-6 pb-16 overflow-x-hidden">
         {children}
       </main>
 
