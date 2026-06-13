@@ -70,13 +70,21 @@ export default function QueuePage() {
               cumulativeWait += serviceDuration;
             }
 
+            let parsedTriage = null;
+            if (item.ai_triage_analysis) {
+              parsedTriage = typeof item.ai_triage_analysis === 'string'
+                ? JSON.parse(item.ai_triage_analysis)
+                : item.ai_triage_analysis;
+            }
+
             return {
               no: index + 1,
               name: item.patient_name || 'Tanpa Nama',
               estimate: waitTimeText,
               status: statusText,
               isUser: Number(item.user_id) === currentUserId,
-              priority: item.priority_level || 'Rendah'
+              priority: item.priority_level || 'Rendah',
+              ai_triage_analysis: parsedTriage
             };
           });
           setQueueData(mapped);
@@ -104,19 +112,58 @@ export default function QueuePage() {
     <PortalLayout role="patient">
       <div className="max-w-4xl mx-auto py-10 flex flex-col items-center">
 
-        <h2 className="text-xl font-bold text-blue-600 mb-6 italic text-center">Kamu Antrian Nomor</h2>
-
-        {/* Large Queue Number Box */}
-        <div className="w-48 h-48 bg-blue-100 rounded-[2.5rem] flex items-center justify-center shadow-inner border border-blue-200 mb-6">
-          <span className="text-[100px] font-black text-blue-600 leading-none">
-            {userQueue?.no || '-'}
+        {/* Queue Header Badge */}
+        <div className="text-center mb-6">
+          <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 bg-blue-50 px-4 py-2 rounded-full border border-blue-100 shadow-sm italic">
+            Status Antrian Anda
           </span>
         </div>
 
-        {/* Live Clock */}
-        <div className="text-7xl font-black text-blue-700 mb-12 tracking-tighter">
-          {formatTime(time)}
+        {/* Large Queue Number Box (Premium Design) */}
+        <div className="relative group w-48 h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-[3rem] flex flex-col items-center justify-center shadow-2xl shadow-blue-200/80 border-4 border-white transform transition-all hover:scale-105 hover:shadow-blue-300/80 duration-300 overflow-hidden mb-8">
+          {/* Decorative floating blur bubbles */}
+          <div className="absolute -top-10 -left-10 w-24 h-24 bg-white/10 rounded-full blur-xl transition-all group-hover:scale-110 duration-500"></div>
+          <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-indigo-300/20 rounded-full blur-xl transition-all group-hover:scale-110 duration-500"></div>
+          
+          <span className="text-[10px] font-black text-blue-100 uppercase tracking-[0.25em] italic mb-1 z-10 opacity-90">
+            Nomor
+          </span>
+          <span className="text-7xl font-black text-white leading-none z-10 drop-shadow-md tracking-tighter">
+            {userQueue?.no !== undefined ? String(userQueue.no).padStart(2, '0') : '--'}
+          </span>
+          <span className="text-[9px] font-black text-blue-100 uppercase tracking-widest mt-2 z-10 bg-white/15 px-3 py-1 rounded-full backdrop-blur-sm">
+            Antrian Aktif
+          </span>
         </div>
+
+        {/* Live Clock (Premium Style) */}
+        <div className="flex flex-col items-center mb-12">
+          <span className="text-[9px] font-black uppercase text-blue-400 tracking-[0.25em] italic mb-1">
+            Waktu Lokal Sekarang
+          </span>
+          <div className="text-5xl font-black bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 bg-clip-text text-transparent tracking-tighter drop-shadow-sm">
+            {formatTime(time)}
+          </div>
+        </div>
+
+        {/* AI Pre-triage Advice Card for Logged-in Patient */}
+        {(() => {
+          if (!userQueue?.ai_triage_analysis?.patient_friendly_advice) return null;
+          return (
+            <div className="w-full bg-gradient-to-r from-blue-50 to-indigo-50/50 p-6 rounded-[2rem] border-2 border-blue-500 shadow-xl shadow-blue-50/50 mb-10 space-y-3 text-left">
+              <p className="text-[10px] font-black uppercase text-blue-600 tracking-[0.2em] italic flex items-center gap-2">
+                <span className="flex h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                Rekomendasi & Edukasi Pra-Pemeriksaan AI
+              </p>
+              <h4 className="text-lg font-black text-blue-900 italic uppercase tracking-tight">
+                Tips Persiapan Kunjungan Gigi Anda
+              </h4>
+              <p className="text-slate-700 text-xs font-semibold leading-relaxed">
+                {userQueue.ai_triage_analysis.patient_friendly_advice}
+              </p>
+            </div>
+          );
+        })()}
 
         {/* Queue Table */}
         <div className="w-full bg-blue-50/50 rounded-3xl p-6 border border-blue-100 shadow-sm overflow-hidden">

@@ -367,18 +367,18 @@ export default function DoctorPatientDetail() {
             {/* AI Analysis Integration */}
             <div className="bg-white p-10 rounded-[3rem] shadow-xl shadow-blue-50 border border-blue-50">
               <div className="flex justify-between items-center mb-10">
-                <h2 className="text-xl font-black text-blue-900 italic uppercase tracking-widest border-b-2 border-blue-100 pb-2">Analisis AI (EfficientNet-B0)</h2>
+                <h2 className="text-xl font-black text-blue-900 italic uppercase tracking-widest border-b-2 border-blue-100 pb-2">Analisis AI (CNN + LLM)</h2>
                 <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-                  appointment.questionnaire?.ai_analysis
+                  appointment.questionnaire?.ai_analysis || appointment.ai_triage_analysis
                     ? 'bg-green-50 text-green-600 border-green-100'
                     : 'bg-yellow-50 text-yellow-600 border-yellow-100'
                 }`}>
-                  {appointment.questionnaire?.ai_analysis ? 'Analisis Selesai' : 'Belum Dianalisis'}
+                  {appointment.questionnaire?.ai_analysis || appointment.ai_triage_analysis ? 'Analisis Selesai' : 'Belum Dianalisis'}
                 </span>
               </div>
 
               <div className="flex flex-col md:flex-row gap-8 items-center bg-blue-50/50 p-8 rounded-[2.5rem] border border-blue-100">
-                <div className="w-56 h-56 bg-white rounded-3xl border-2 border-blue-600 border-dashed flex items-center justify-center relative shadow-inner group overflow-hidden">
+                <div className="w-56 h-56 bg-white rounded-3xl border-2 border-blue-600 border-dashed flex items-center justify-center relative shadow-inner group overflow-hidden flex-shrink-0">
                   {appointment.image_url ? (
                     <img src={getCleanImageUrl(appointment.image_url)} alt="XRay" className="w-full h-full object-cover" />
                   ) : (
@@ -390,19 +390,17 @@ export default function DoctorPatientDetail() {
                     </div>
                   )}
                 </div>
-                <div className="flex-1 space-y-4">
+                <div className="flex-grow space-y-4">
                   <div className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest italic">Hasil Identifikasi</p>
-                      {appointment.image_url && (
-                        <button
-                          onClick={handleAnalyze}
-                          disabled={isAnalyzing}
-                          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
-                        >
-                          {isAnalyzing ? 'Menganalisis...' : 'Analisis Ulang'}
-                        </button>
-                      )}
+                    <div className="flex items-center justify-between mb-3 gap-2">
+                      <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest italic">Hasil Citra CNN</p>
+                      <button
+                        onClick={handleAnalyze}
+                        disabled={isAnalyzing}
+                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
+                      >
+                        {isAnalyzing ? 'Menganalisis...' : 'Jalankan Analisis AI'}
+                      </button>
                     </div>
                     <div className="flex gap-2 flex-wrap">
                       {appointment.questionnaire?.ai_analysis ? (
@@ -410,16 +408,102 @@ export default function DoctorPatientDetail() {
                           {appointment.questionnaire.ai_analysis.prediction === 'karies' ? 'Karies' : 'Non-Karies'} ({appointment.questionnaire.ai_analysis.confidence}%)
                         </span>
                       ) : (
-                        <span className="bg-gray-400 text-white px-3 py-1 rounded-lg text-xs font-black italic">Belum Dianalisis</span>
+                        <span className="bg-gray-400 text-white px-3 py-1 rounded-lg text-xs font-black italic">Tidak Ada Citra Scan</span>
                       )}
                       {analyzeError && (
                         <span className="text-red-500 text-[10px] font-bold italic block w-full mt-1">{analyzeError}</span>
                       )}
                     </div>
                   </div>
-                  <p className="text-blue-600 font-bold italic text-sm px-2">* Analisis ini dihasilkan otomatis oleh model EfficientNet-B0 dan hanya sebagai referensi.</p>
+                  <p className="text-blue-600 font-bold italic text-xs px-2">* Analisis citra dihasilkan oleh EfficientNet-B0 dan late-fusion anamnesis dianalisis oleh Gemini.</p>
                 </div>
               </div>
+
+              {/* LLM Late-Fusion Triage Section */}
+              {appointment.ai_triage_analysis && (
+                <div className="mt-8 border-t border-blue-100 pt-8 space-y-6">
+                  <h3 className="text-sm font-black text-blue-900 uppercase tracking-wider italic">Hasil Late-Fusion LLM Triage</h3>
+                  
+                  {/* Urgency and Score */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-red-50/50 p-4 rounded-xl border border-red-100">
+                      <p className="text-[9px] font-black text-red-500 uppercase tracking-[0.2em] mb-1 italic">Prioritas Antrian (Triage)</p>
+                      <p className="text-red-900 font-black text-sm uppercase tracking-wider">
+                        {appointment.priority_level || appointment.ai_triage_analysis.urgency_level || 'Rendah'}
+                      </p>
+                    </div>
+                    <div className="bg-purple-50/50 p-4 rounded-xl border border-purple-100">
+                      <p className="text-[9px] font-black text-purple-500 uppercase tracking-[0.2em] mb-1 italic">Skor Urgensi (0-10)</p>
+                      <p className="text-purple-900 font-black text-sm">
+                        {appointment.urgency_score ?? appointment.ai_triage_analysis.urgency_score ?? 0} / 10
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Symptoms Extracted */}
+                  {appointment.ai_triage_analysis.extracted_symptoms && (
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-2">
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] italic">Gejala Utama Terdeteksi (LLM)</p>
+                      <div className="grid grid-cols-3 gap-2 text-[10px] font-bold text-slate-700">
+                        <div>
+                          <span className="block text-[8px] text-slate-400 font-black uppercase">Pemicu Nyeri</span>
+                          <span className="italic">{appointment.ai_triage_analysis.extracted_symptoms.pain_trigger || '-'}</span>
+                        </div>
+                        <div>
+                          <span className="block text-[8px] text-slate-400 font-black uppercase">Durasi</span>
+                          <span className="italic">{appointment.ai_triage_analysis.extracted_symptoms.duration_days ? `${appointment.ai_triage_analysis.extracted_symptoms.duration_days} hari` : '-'}</span>
+                        </div>
+                        <div>
+                          <span className="block text-[8px] text-slate-400 font-black uppercase">Lokasi Gigi</span>
+                          <span className="italic">{appointment.ai_triage_analysis.extracted_symptoms.location || '-'}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Anamnesis Draft with Copy Button */}
+                  <div className="space-y-2 bg-blue-50/30 p-5 rounded-2xl border border-blue-100/70 relative group/draft">
+                    <div className="flex justify-between items-center mb-1">
+                      <p className="text-[9px] font-black text-blue-500 uppercase tracking-[0.2em] italic">Draf Anamnesis Formal (Dokter)</p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const draft = appointment.anamnesis_draft || appointment.ai_triage_analysis?.anamnesis_draft;
+                          if (draft) {
+                            setDoctorNotes(draft);
+                            toast({
+                              title: "Draf Disalin",
+                              description: "Draf anamnesis berhasil disalin ke Catatan Dokter."
+                            });
+                          }
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-xl text-[8px] font-black uppercase tracking-wider transition-colors active:scale-95 transform"
+                      >
+                        Salin ke Catatan Dokter
+                      </button>
+                    </div>
+                    <p className="text-blue-950 font-semibold text-xs leading-relaxed italic">
+                      {appointment.anamnesis_draft || appointment.ai_triage_analysis.anamnesis_draft}
+                    </p>
+                  </div>
+
+                  {/* Clinical Reasoning */}
+                  <div className="space-y-1">
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] italic">Justifikasi Klinis</p>
+                    <p className="text-slate-650 text-xs leading-relaxed font-semibold italic text-slate-600">
+                      {appointment.ai_triage_analysis.clinical_reasoning}
+                    </p>
+                  </div>
+
+                  {/* Patient Friendly Advice */}
+                  <div className="space-y-1 bg-slate-50 p-4 rounded-xl border border-slate-200/50">
+                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] italic">Saran Edukasi Pasien (Sisi Pasien)</p>
+                    <p className="text-slate-700 text-xs leading-relaxed font-medium">
+                      {appointment.ai_triage_analysis.patient_friendly_advice}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Tindakan Medis - Tabs */}

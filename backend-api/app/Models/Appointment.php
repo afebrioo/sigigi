@@ -24,10 +24,14 @@ class Appointment extends Model
         'image_url',
         'urgency_score',
         'priority_level',
+        'keluhan_utama',
+        'anamnesis_draft',
+        'ai_triage_analysis',
     ];
 
     protected $casts = [
         'questionnaire' => 'array',
+        'ai_triage_analysis' => 'array',
     ];
 
     public function user()

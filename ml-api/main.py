@@ -1,4 +1,5 @@
 import os
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 import sys
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
@@ -94,6 +95,33 @@ async def predict(file: UploadFile = File(...)):
             "confidence": round(confidence_score * 100, 2),
             "filename": file.filename
         }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+from pydantic import BaseModel
+from typing import Dict, Optional, Any
+
+class TriageRequest(BaseModel):
+    keluhan: Optional[str] = ""
+    questionnaire: Dict[str, Any] = {}
+    cnn_prediction: Optional[str] = "non-karies"
+    cnn_confidence: Optional[float] = 0.0
+    gemini_api_key: Optional[str] = None
+
+
+@app.post("/triage")
+async def triage(req: TriageRequest):
+    from llm_service import run_triage
+    try:
+        result = run_triage(
+            keluhan=req.keluhan,
+            questionnaire=req.questionnaire,
+            cnn_prediction=req.cnn_prediction,
+            cnn_confidence=req.cnn_confidence,
+            gemini_api_key=req.gemini_api_key
+        )
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

@@ -39,6 +39,13 @@ export default function PatientHistory() {
             if (q.q2) keluhanParts.push(`Lubang gigi: ${q.q2}`);
             if (q.q3) keluhanParts.push(`Pembengkakan: ${q.q3}`);
 
+            let parsedTriage = null;
+            if (item.ai_triage_analysis) {
+              parsedTriage = typeof item.ai_triage_analysis === 'string' 
+                ? JSON.parse(item.ai_triage_analysis) 
+                : item.ai_triage_analysis;
+            }
+
             return {
               id: `RM-${item.id.toString().padStart(5, '0')}`,
               rawId: item.rekam_medis?.id_rekam_medis || null,
@@ -48,12 +55,13 @@ export default function PatientHistory() {
               diagnosis: q.diagnosis || item.action_type || '-',
               treatment: q.treatment || item.action_type || '-',
               notes: q.notes || (keluhanParts.length > 0 ? keluhanParts.join(' | ') : 'Tidak ada catatan'),
-              keluhan: keluhanParts.join(' | ') || 'Tidak ada',
+              keluhan: item.keluhan_utama || keluhanParts.join(' | ') || 'Tidak ada',
               ai_prediction: ai ? ai.prediction : null,
               ai_confidence: ai ? ai.confidence : null,
               image_url: item.image_url || null,
               status: 'Selesai',
               price: q.price || 'Dibayar',
+              ai_triage_analysis: parsedTriage
             };
           });
           setMedicalRecords(mapped);
@@ -184,6 +192,18 @@ export default function PatientHistory() {
                         <p className="text-[10px] font-black uppercase text-blue-400 tracking-[0.2em] italic">Catatan Dokter</p>
                         <p className="text-blue-800/80 font-medium text-sm italic">{record.notes}</p>
                       </div>
+                      
+                      {(record.ai_triage_analysis?.post_treatment_advice || record.ai_triage_analysis?.patient_friendly_advice) && (
+                        <div className="col-span-1 md:col-span-2 bg-gradient-to-r from-blue-50 to-indigo-50/50 p-5 rounded-3xl border border-blue-100/70 space-y-2 mt-2">
+                          <p className="text-[10px] font-black text-blue-600 tracking-[0.2em] italic flex items-center gap-2">
+                            <span className="flex h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                            Rekomendasi & Edukasi Kesehatan AI (Pasca-Tindakan)
+                          </p>
+                          <p className="text-slate-700 text-xs font-semibold leading-relaxed">
+                            {record.ai_triage_analysis.post_treatment_advice || record.ai_triage_analysis.patient_friendly_advice}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
