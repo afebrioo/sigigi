@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\models\MasterDokter;
-use App\models\MasterKlinik;
+use App\Models\MasterDokter;
+use App\Models\MasterKlinik;
 
 class DokterKlinik extends Model
 {

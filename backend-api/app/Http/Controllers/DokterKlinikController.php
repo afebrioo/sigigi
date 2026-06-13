@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\DokterKlinik;
-use App\models\MasterDokter;
-use App\models\MasterKlinik;
+use App\Models\DokterKlinik;
+use App\Models\MasterDokter;
+use App\Models\MasterKlinik;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
