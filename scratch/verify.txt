@@ -1,0 +1,19 @@
+﻿=== VERIFICATION ===
+  [OK] sigigi.my.id
+  [OK] sigigi.my.id/portal/register
+  [OK] sigigi.my.id/portal/login
+  [OK] Pastikan data lokasi klinik, tanggal
+  [OK] Lanjut Isi Kuesioner
+  [OK] Selesaikan Pendaftaran
+  [OK] halaman questionnaire yang sama
+  [MISSING] 0-3 jawaban Ya
+  [MISSING] 4-7 jawaban Ya
+  [MISSING] 8-10 jawaban Ya
+  [OK] 0ΓÇô3 jawaban Ya
+  [OK] 4ΓÇô7 jawaban Ya
+  [OK] 8ΓÇô10 jawaban Ya
+  [OK] slot penuh
+  [OK] URL deployment resmi
+  [OK] kamera HP berukuran besar
+  [OK] Lihat Bab 4
+  [OK] 10 MB

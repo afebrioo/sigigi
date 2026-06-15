@@ -17,7 +17,7 @@ return new class extends Migration
         DB::table('klinik')->updateOrInsert(
             ['id_klinik' => 1],
             [
-                'nama_klinik' => 'Klinik Lembang',
+                'nama_klinik' => 'Praktek drg. Marlin Himawati – Cabang Lembang',
                 'alamat_klinik' => 'Jl. Grand Hotel No. 70, Lembang',
                 'jam_operasional' => '16.00 - 20.00',
             ]
@@ -26,8 +26,8 @@ return new class extends Migration
         DB::table('klinik')->updateOrInsert(
             ['id_klinik' => 2],
             [
-                'nama_klinik' => 'Klinik Cibadak',
-                'alamat_klinik' => 'Jl. Cibadak 194, Bandung',
+                'nama_klinik' => 'Praktek drg. Marlin Himawati – Cabang Cibadak',
+                'alamat_klinik' => 'Jl. Cibadak No. 194, Cibadak, Kec. Astanaanyar, Bandung',
                 'jam_operasional' => '16.00 - 20.00',
             ]
         );

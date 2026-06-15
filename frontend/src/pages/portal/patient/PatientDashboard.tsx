@@ -308,14 +308,16 @@ export default function PatientDashboard() {
 
               {selectedBranch === 'cibadak' ? (
                 <>
-                  <h3 className="text-2xl font-black text-blue-950 tracking-tight italic uppercase mb-2">Klinik SIGIGI Cibadak</h3>
+                  <h3 className="text-2xl font-black text-blue-950 tracking-tight italic uppercase mb-2">Praktek drg. Marlin Himawati</h3>
+                  <p className="text-xs font-bold text-blue-500 tracking-wide uppercase mb-1">Cabang Cibadak</p>
                   <p className="text-slate-500 text-sm font-semibold leading-relaxed">
                     Jl. Cibadak No. 194, Cibadak, Kec. Astanaanyar, Kota Bandung, Jawa Barat 40241
                   </p>
                 </>
               ) : (
                 <>
-                  <h3 className="text-2xl font-black text-blue-950 tracking-tight italic uppercase mb-2">Klinik SIGIGI Lembang</h3>
+                  <h3 className="text-2xl font-black text-blue-950 tracking-tight italic uppercase mb-2">Praktek drg. Marlin Himawati</h3>
+                  <p className="text-xs font-bold text-blue-500 tracking-wide uppercase mb-1">Cabang Lembang</p>
                   <p className="text-slate-500 text-sm font-semibold leading-relaxed">
                     Jl. Grand Hotel No. 70, Lembang, Kec. Lembang, Kabupaten Bandung Barat, Jawa Barat 40391
                   </p>

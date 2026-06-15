@@ -1,0 +1,86 @@
+﻿P0 [Normal]: DOKUMEN CD-5
+P13 [Normal]: SIGIGI 2.0 : Perancangan dan Pengembangan Fitur Antrian dan Penjadwalan 
+P18 [Normal]: Oleh :
+P20 [Normal]: Rahmanda Afebrio Yuris Soesatyo/1103223024
+P21 [Normal]: Rafly Fasha Purnomo Putra/1103223050
+P22 [Normal]: M Alwa Fahrizki/1103220082
+P29 [Normal]: PRODI S1 TEKNIK KOMPUTER
+P30 [Normal]: FAKULTAS TEKNIK ELEKTRO
+P31 [Normal]: UNIVERSITAS TELKOM
+P32 [Normal]: BANDUNG
+P33 [Normal]: 2026
+P34 [Normal]: Dokumentasi Produk Capstone Design
+P35 [Normal]: Lembar Pengesahan Dokumen
+P40 [Normal]: DAFTAR REVISI
+P41 [Normal]: DOKUMEN CAPSTONE DESIGN 5
+P46 [Normal]: Skenario Umum Pengujian
+P47 [Normal]: Secara umum, dokumen CD-5 berisi pengujian solusi, bilamana solusi tersebut sudah berhasil menjawab atau menyelesaikan permasalahan yang didefinisikan di CD-1. Lebih lanjut, CD-5 berisi asesmen atas s
+P48 [Normal]: Bagian pertama CD-5 adalah skenario umum pengujian. Bagian ini membahas hal-hal terkait pengujian secara umum. Hal-hal tersebut antara lain tujuan pengujian, daftar pengujian, lokasi dan waktu penguji
+P49 [Normal]: Pengujian sistem SIGIGI dilakukan untuk memastikan bahwa solusi yang telah dikembangkan mampu menjawab permasalahan yang telah didefinisikan pada CD-1 serta memenuhi spesifikasi yang telah ditetapkan 
+P50 [Normal]: Pengujian dilakukan dengan pendekatan black-box testing, yaitu pengujian berdasarkan input dan output sistem tanpa membahas struktur kode program secara langsung [1]. Selain itu, beberapa pengujian pe
+P53 [Normal]: Tabel 5.1 ΓÇª
+P56 [List Paragraph]: Functional Requirements (FR)
+P57 [List Paragraph]: Pengujian functional requirements dilakukan untuk memastikan bahwa seluruh fitur utama SIGIGI dapat berjalan sesuai dengan spesifikasi yang telah ditentukan. Pengujian ini mencakup fitur autentikasi p
+P59 [List Paragraph]: Tabel 5.2 Tabel Pengujian Functional Requirements
+P61 [List Paragraph]: Non-Functional Requirements (NF)
+P62 [List Paragraph]: Pengujian non-functional requirements dilakukan untuk menilai kualitas sistem di luar fungsi utama aplikasi. Aspek yang diuji meliputi ketersediaan halaman booking, keamanan data, kompatibilitas tampi
+P64 [List Paragraph]: Tabel 5.3 Tabel Pengujian Non-Functional Requirements
+P68 [Normal]: Detil Pengujian
+P69 [Normal]: Bagian ini menjabarkan proses dan hasil pengujian secara detil. Paparan dapat dilakukan secara berurutan untuk setiap spesifikasi yang diuji. Materi uji yang dibahas dalam setiap spesifikasi meliputi:
+P70 [Normal]: Penulisan tabel maupun bagan harus lengkap. Seluruh data maupun parameter numerik di dalam tabel maupun bagan harus dilengkapi dengan satuan. Satuan diupayakan menggunakan format SI. Data numerik yang
+P71 [Normal]: Proses pengujian yang dilakukan terhadap sistem SIGIGI untuk memastikan bahwa fitur yang telah dikembangkan sesuai dengan spesifikasi functional requirements dan non-functional requirements yang telah
+P73 [List Paragraph]: Pengujian Functional Requirements (FR)
+P74 [List Paragraph]: Subbab ini menjelaskan pengujian terhadap fitur utama SIGIGI berdasarkan functional requirements yang telah ditentukan. Pengujian dilakukan menggunakan pendekatan black-box testing dengan menjalankan 
+P76 [List Paragraph]: Tabel 5.4 Detail Hasil Pengujian FR-02 Appointment Online, Tingkat Urgensi, dan Analisis AI
+P79 [List Paragraph]: Gambar 5.1 Evidence Pengujian Lihat Antrean
+P81 [List Paragraph]: Tabel 5.5 Detail Hasil Pengujian FR-03 Pemantauan Antrean Pasien
+P83 [Normal]: BERLANJUT ΓÇªΓÇª
+P84 [List Paragraph]: Pengujian Non-Functional Requirements (NF)
+P85 [List Paragraph]: Subbab ini menjelaskan pengujian terhadap aspek non-fungsional sistem. Pengujian dilakukan untuk memastikan kualitas sistem dari sisi availability, security, compatibility, usability, dan performance.
+P88 [List Paragraph]: Tabel 5.6 Detail Hasil Pengujian NF-01 Booking Availability Validation
+P90 [List Paragraph]: User Acceptance Testing (UAT)
+P91 [List Paragraph]: Subbab ini menjelaskan pengujian penerimaan pengguna terhadap sistem SIGIGI. UAT dilakukan dengan melibatkan pengguna, seperti dokter, admin/kasir, dan pasien. Pengujian ini bertujuan untuk mengetahui
+P92 [List Paragraph]: Tabel 5.7 Detail Pelaksanaan UAT Modul Login 
+P94 [List Paragraph]: Tabel 5.8 Hasil Pengujian UAT Pada Modul Login
+P96 [List Paragraph]: Tabel 5.9 Detail Pelaksanaan UAT Modul Appointment 
+P98 [Normal]: BERLANJUT ΓÇª..
+P100 [Normal]: Analisa Hasil Pengujian
+P101 [Normal]: Bagian ini pembahasan terkait hasil pengujian dan beragam temuan. Selain itu, bagian ini juga merupakan pencarian hubungan atau relevansi antara hasil pengujian dengan teori-teori yang terkait. Dalam 
+P102 [Normal]: Analisa hasil pengujian dilakukan untuk menilai sejauh mana sistem SIGIGI mampu memenuhi spesifikasi yang telah ditetapkan pada CD-2 serta menjawab permasalahan yang telah didefinisikan pada CD-1. Ana
+P104 [List Paragraph]: Tingkat Keberhasilan Solusi dalam Menjawab Permasalahan
+P105 [isselectedend]: Berdasarkan hasil pengujian yang telah dilakukan, sistem SIGIGI secara umum mampu menjalankan fitur utama yang dirancang untuk mendukung proses pelayanan klinik gigi. Pengujian functional requirements
+P106 [isselectedend]: Dari sisi permasalahan utama, SIGIGI berhasil membantu proses pendaftaran pasien yang sebelumnya dilakukan secara datang langsung menjadi proses appointment secara online. Pasien dapat mengisi data ap
+P107 [isselectedend]: Selain itu, fitur pemantauan antrean membantu pasien memperoleh informasi mengenai nomor antrean, status antrean, dan estimasi waktu pelayanan. Meskipun pembaruan data antrean pada implementasi saat i
+P108 [isselectedend]: Dari sisi dokter, hasil pengujian menunjukkan bahwa dashboard dokter mampu menampilkan informasi pasien secara lebih lengkap, meliputi data diri pasien, jawaban form keluhan, citra gigi yang diunggah,
+P109 [isselectedend]: Adapun hubungan antara permasalahan, solusi yang diberikan SIGIGI, dan hasil pengujian dapat dilihat pada Tabel 5.9.
+P110 [isselectedend]: Tabel 5.9 Hubungan Permasalahan, Solusi SIGIGI, dan Hasil Pengujian
+P111 [isselectedend]: Berdasarkan hasil tersebut, SIGIGI dapat dikatakan telah menjawab permasalahan utama yang telah dijelaskan pada CD-1, khususnya dalam hal digitalisasi appointment, penyajian informasi antrean, penyedi
+P112 [List Paragraph]: Faktor Pendukung dan Faktor Penghambat Keberhasilan
+P113 [isselectedend]: Keberhasilan pengujian SIGIGI dipengaruhi oleh beberapa faktor pendukung. Faktor pertama adalah penggunaan aplikasi berbasis web yang memungkinkan sistem diakses melalui browser tanpa memerlukan insta
+P114 [isselectedend]: Faktor kedua adalah adanya pembagian hak akses berdasarkan peran pengguna. Pemisahan akses antara pasien, dokter, dan admin membantu menjaga alur kerja sistem agar setiap pengguna hanya dapat mengakse
+P115 [isselectedend]: Faktor ketiga adalah penggunaan metode rule-based pada penentuan tingkat urgensi. Metode ini mendukung proses pengujian karena aturan penilaian dapat ditelusuri berdasarkan jawaban form keluhan pasien
+P116 [isselectedend]: Faktor keempat adalah integrasi fitur AI pada proses appointment. Fitur ini memungkinkan citra gigi yang diunggah pasien dianalisis untuk menghasilkan klasifikasi karies atau non-karies sebagai inform
+P117 [Normal (Web)]: Namun, terdapat pula beberapa faktor penghambat yang memengaruhi keterbatasan sistem. Salah satunya adalah mekanisme pembaruan antrean yang belum menggunakan pembaruan otomatis berbasis WebSocket atau
+P118 [List Paragraph]: Tabel 5.10 Faktor Pendukung dan Penghambat Keberhasilan SIGIGI
+P120 [List Paragraph]: 	Berdasarkan faktor-faktor tersebut, dapat disimpulkan bahwa keberhasilan SIGIGI didukung oleh integrasi fitur utama yang sesuai dengan kebutuhan pengguna. Namun, beberapa aspek teknis masih dapat dik
+P124 [List Paragraph]: Keterbatasan Solusi
+P125 [List Paragraph]: 	Meskipun hasil pengujian menunjukkan bahwa SIGIGI telah memenuhi spesifikasi utama yang ditetapkan, sistem ini masih memiliki beberapa keterbatasan. Keterbatasan pertama terdapat pada mekanisme pemba
+P126 [isselectedend]: Keterbatasan kedua terdapat pada fitur analisis AI. AI pada SIGIGI hanya digunakan untuk memberikan klasifikasi awal berupa karies atau non-karies berdasarkan citra gigi yang diunggah pasien. Hasil an
+P127 [isselectedend]: Keterbatasan ketiga terdapat pada fitur unggah citra gigi yang bersifat opsional. Hal ini membuat tidak semua appointment memiliki hasil analisis AI. Namun, keputusan ini tetap diperlukan agar pasien 
+P128 [isselectedend]: Keterbatasan keempat berkaitan dengan cakupan implementasi sistem. SIGIGI telah mengimplementasikan fitur utama untuk pasien, dokter, dan admin, tetapi sistem belum sepenuhnya mencakup seluruh kebutuh
+P132 [List Paragraph]: Tabel 5.11 Keterbatasan Solusi SIGIGI
+P135 [List Paragraph]: 	Dengan adanya keterbatasan tersebut, SIGIGI tetap dapat digunakan sebagai sistem pendukung pelayanan klinik gigi, tetapi masih memerlukan pengembangan lanjutan agar lebih optimal apabila diterapkan d
+P136 [List Paragraph]: Rencana Pengembangan Berkelanjutan
+P137 [List Paragraph]: 	Berdasarkan hasil pengujian dan keterbatasan yang ditemukan, terdapat beberapa rencana pengembangan berkelanjutan yang dapat dilakukan pada versi berikutnya. Pengembangan pertama adalah meningkatkan 
+P138 [isselectedend]: Pengembangan kedua adalah meningkatkan kualitas model AI dengan menambah jumlah dan variasi dataset citra gigi. Dataset yang lebih beragam dapat membantu model mengenali kondisi citra yang lebih reali
+P139 [isselectedend]: Pengembangan ketiga adalah menambahkan fitur notifikasi otomatis untuk pasien dan admin klinik. Notifikasi dapat digunakan untuk mengingatkan jadwal appointment, perubahan status antrean, atau informa
+P140 [isselectedend]: Pengembangan keempat adalah mengembangkan sistem antrean untuk pasien disesuaikan dengan tingkat urgensi dan hasil analisis AI (karies atau non-karies). Pasien yang memiliki tingkat urgensi lebih ting
+P141 [isselectedend]: Tabel 5.12 Rencana Pengembangan Berkelanjutan SIGIGI
+P142 [isselectedend]: Berdasarkan rencana pengembangan tersebut, SIGIGI memiliki peluang untuk dikembangkan menjadi sistem pelayanan klinik gigi yang lebih lengkap dan siap digunakan dalam lingkungan operasional yang lebih
+P145 [Normal]: Kesimpulan
+P146 [Normal]: Bagian ini merupakan akhir CD-5 dan merupakan bagian akhir dokumentasi proyek capstone. Bagian kesimpulan menggarisbawahi tingkat keberhasilan solusi dan menjawab permasalahan. Selain itu, kesimpulan 
+P148 [Body Text]: Daftar Pustaka
+P149 [Body Text]: B. C. Lestari, P. Pearce, and O. Zalianty, ΓÇ£Development of ultrasonography device for rural areaΓÇ¥, Journal of Health and Wellness, vol. 13, pp. 1023-1006, 2021.
+P150 [Body Text]: J. Widodo, B. J. Habibie, and S. B. Yudhoyono ΓÇ£Integrated transportation system for archipelagic countryΓÇ¥, International Journal of Sustainable Development, vol. 3, no. 1, pp. 13-23, 2023.
+P151 [Body Text]: F, Mercury, B. May, J. Deacon, and R. Taylor, ΓÇ£Review on the development of wide stereo soundΓÇ¥, International Journal of Electric Music Instrument, vol. 32, no. 4, 2021.
+P152 [Body Text]: P. R. Picasso dan S. S. Boestaman, ΓÇ£Artificial intelligence implementation on reproducing classical paintingΓÇ¥, International Journal of Digital Art, vol. 15, no. 2, 2022.

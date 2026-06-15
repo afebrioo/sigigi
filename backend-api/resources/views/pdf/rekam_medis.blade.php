@@ -142,9 +142,9 @@
                         <div>{{ $klinik->alamat_klinik }}</div>
                         <div>Telp: {{ $klinik->telepon }}</div>
                     @else
-                        <div style="font-weight: bold; font-size: 12px; color: #1e3a8a;">Klinik Sigigi</div>
-                        <div>Jl. Capstone Design No. 2026</div>
-                        <div>Telp: (021) 12345678</div>
+                        <div style="font-weight: bold; font-size: 12px; color: #1e3a8a;">Praktek drg. Marlin Himawati</div>
+                        <div>Jl. Cibadak No. 194, Bandung</div>
+                        <div>Telp: -</div>
                     @endif
                 </td>
             </tr>

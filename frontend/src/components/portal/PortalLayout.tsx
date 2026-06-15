@@ -71,7 +71,7 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
                 </Link>
               </>
             ) : (
-              <span className="text-white font-extrabold text-lg tracking-tight ml-2">Klinik SIGIGI</span>
+              <span className="text-white font-extrabold text-lg tracking-tight ml-2">Praktek drg. Marlin Himawati</span>
             )}
           </nav>
         </div>
@@ -277,10 +277,10 @@ const PortalLayout: React.FC<PortalLayoutProps> = ({ children, role, dark = fals
               <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cabang</h4>
               <ul className="space-y-2.5 text-xs font-bold text-slate-400">
                 <li className="hover:text-white transition-colors duration-200 cursor-default">
-                  SIGIGI Cibadak
+                  Cabang Cibadak
                 </li>
                 <li className="hover:text-white transition-colors duration-200 cursor-default">
-                  SIGIGI Lembang
+                  Cabang Lembang
                 </li>
               </ul>
             </div>

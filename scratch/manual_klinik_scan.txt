@@ -1,0 +1,79 @@
+﻿P11: Manual book ini digunakan sebagai panduan penggunaan aplikasi SIGIGI 2.0 bagi admin/staff klinik, dokter, dan pasien. Do
+P13: SIGIGI 2.0 merupakan aplikasi berbasis web yang membantu proses reservasi klinik gigi, pengelolaan antrean pasien, penca
+P16: Admin/staff dapat mengelola data master, data klinik, pengguna, dokter, pasien, harga tindakan, harga obat, serta memban
+P18: Aplikasi telah dideploy dan dapat diakses melalui alamat website resmi klinik.
+P44: Portal Admin/Staff digunakan oleh pihak internal klinik untuk mengelola data operasional sistem. Pengguna yang dapat men
+P60: Gunakan menu navigasi untuk membuka modul seperti Klinik, Dokter, Pasien, Master Data, Harga, atau Tindakan.
+P74: 3.4 Mengelola Data Klinik
+P75: Tujuan fitur: Mengelola informasi klinik/cabang yang tersedia di aplikasi.
+P77: Pilih menu Klinik.
+P78: Klik Tambah Data untuk menambahkan klinik baru.
+P79: Isi nama klinik, alamat, nomor telepon, dan informasi lain yang tersedia pada form.
+P81: Gunakan fitur Edit apabila terdapat perubahan data klinik.
+P82: Hasil yang diharapkan: Data klinik tersimpan dan dapat digunakan pada appointment, dokter klinik, serta harga per klinik
+P83: Gambar 4. Halaman Manajemen Klinik
+P91: Pastikan data dokter sudah benar sebelum menghubungkannya ke klinik.
+P92: Hasil yang diharapkan: Data dokter berhasil tersimpan dan siap dihubungkan dengan klinik.
+P94: 3.6 Mengatur Dokter Klinik
+P95: Tujuan fitur: Menentukan dokter yang bertugas pada klinik tertentu.
+P97: Pilih menu Dokter Klinik.
+P99: Pilih nama dokter dan klinik yang sesuai.
+P100: Simpan data relasi dokter dengan klinik.
+P101: Ubah atau hapus data apabila dokter berpindah klinik atau tidak lagi aktif.
+P102: Hasil yang diharapkan: Dokter terhubung dengan klinik yang benar sehingga data appointment dan harga klinik dapat diguna
+P103: Gambar 6. Halaman Dokter Klinik
+P143: 3.11 Mengatur Harga Tindakan per Klinik
+P144: Tujuan fitur: Menentukan harga tindakan berdasarkan klinik/cabang agar biaya pelayanan sesuai lokasi pelayanan.
+P148: Pilih klinik dan tindakan yang akan diatur harganya.
+P151: Pastikan harga klinik sudah benar karena akan digunakan pada perhitungan billing dokter.
+P152: Hasil yang diharapkan: Harga tindakan per klinik tersimpan dan sistem dapat menampilkan biaya sesuai klinik appointment.
+P153: Gambar 11. Halaman Harga Tindakan per Klinik
+P154: 3.12 Mengatur Harga Obat per Klinik
+P155: Tujuan fitur: Menentukan harga obat berdasarkan klinik/cabang agar biaya resep sesuai lokasi pelayanan.
+P159: Pilih klinik dan obat yang akan diatur harganya.
+P162: Hasil yang diharapkan: Harga obat per klinik tersimpan dan digunakan pada perhitungan billing resep.
+P163: Gambar 12. Halaman Harga Obat per Klinik
+P169: Pastikan identitas pasien, klinik, dan dokter sudah sesuai.
+P198: Perhatikan nama pasien, tingkat urgensi, estimasi pelayanan, klinik, dan status appointment.
+P207: Periksa identitas pasien seperti nama, kontak, dan klinik appointment.
+P238: Pastikan harga tindakan yang muncul sesuai dengan klinik appointment.
+P248: Pastikan harga obat yang muncul sesuai dengan klinik appointment.
+P261: Tujuan fitur: Mencetak dokumen pemeriksaan atau resep apabila dibutuhkan klinik/pasien.
+P267: Hasil yang diharapkan: Dokumen rekam medis atau resep dapat dicetak sesuai kebutuhan operasional klinik.
+P302: Tujuan fitur: Mendaftarkan kunjungan pasien ke klinik gigi.
+P306: Pilih klinik atau jadwal apabila tersedia.
+P307: Pastikan data lokasi klinik, tanggal, dan waktu kunjungan sudah benar sebelum melanjutkan.
+P335: Lihat daftar antrean yang sedang aktif pada klinik.
+P343: Perhatikan daftar appointment, tanggal, klinik, status, dan informasi terkait.
+T4R6C2: Dibutuhkan apabila klinik ingin mencetak rekam medis atau resep.
+T5R1C1: Mengelola data master, pengguna, dokter, pasien, klinik, harga, dan data operasional klinik.
+T6R1C2: Masuk ke portal internal klinik sesuai role admin, staff, atau dokter.
+T6R4C1: Manajemen Klinik
+T6R4C2: Mengelola data klinik/cabang yang tersedia dalam sistem.
+T6R6C1: Dokter Klinik
+T6R6C2: Mengatur relasi dokter dengan klinik tertentu.
+T6R11C2: Mengatur harga tindakan per klinik.
+T6R12C2: Mengatur harga obat per klinik.
+T7R7C2: Menampilkan ringkasan biaya tindakan dan obat berdasarkan klinik.
+T8R4C2: Mengisi data appointment dan memilih klinik/jadwal.
+T8R7C2: Melihat nomor antrean dan daftar antrean pada klinik.
+T12R0C0: [Tempel screenshot di sini]
+Halaman Manajemen Klinik
+T14R0C0: [Tempel screenshot di sini]
+Halaman Dokter Klinik
+T19R0C0: [Tempel screenshot di sini]
+Halaman Harga Tindakan per Klinik
+T20R0C0: [Tempel screenshot di sini]
+Halaman Harga Obat per Klinik
+T44R2C1: Mengelola master data klinik, dokter, pasien, tindakan, obat, dan kode penyakit.
+T44R3C1: Mengatur harga tindakan dan obat per klinik.
+T44R3C2: Biaya pelayanan sesuai klinik.
+T46R1C2: Pasien tetap mengikuti antrean sesuai prosedur klinik.
+T47R5C1: Harga tindakan dan obat per klinik
+T47R5C2: Dokter/staff/klinik
+T48R6C1: Harga per klinik belum diatur atau data klinik appointment salah.
+T48R6C2: Admin perlu memeriksa menu Harga Tindakan/Harga Obat dan data klinik appointment.
+T49R4C1: Halaman Manajemen Klinik
+T49R6C1: Halaman Dokter Klinik
+T49R11C1: Halaman Harga Tindakan per Klinik
+T49R12C1: Halaman Harga Obat per Klinik
