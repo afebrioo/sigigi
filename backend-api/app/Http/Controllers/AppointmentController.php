@@ -193,8 +193,7 @@ class AppointmentController extends Controller
                 'golongan_darah'   => 'nullable|string',
                 'kontak_darurat_nama'    => 'nullable|string',
                 'kontak_darurat_telepon' => 'nullable|string',
-                'kontak_darurat_relasi'  => 'nullable|string',
-                'keluhan_utama'          => 'nullable|string'
+                'kontak_darurat_relasi'  => 'nullable|string'
             ]);
 
             // Only assign user_id if the request comes from a PATIENT role user.
@@ -223,12 +222,6 @@ class AppointmentController extends Controller
                 ], 422);
             }
 
-            // Map keluhan_utama if present in request, or extract from questionnaire['keluhan']
-            $keluhanUtama = $request->input('keluhan_utama');
-            if (empty($keluhanUtama) && isset($request->questionnaire['keluhan'])) {
-                $keluhanUtama = $request->questionnaire['keluhan'];
-            }
-
             $appointment = Appointment::create([
                 'user_id'           => $userId,
                 'id_klinik'         => $request->id_klinik ?? 1,
@@ -242,9 +235,15 @@ class AppointmentController extends Controller
                 'patient_address'   => $request->patient_address,
                 'action_type'       => $request->action_type,
                 'questionnaire'     => $request->questionnaire,
-                'image_url'         => $request->image_url,
-                'keluhan_utama'     => $keluhanUtama
+                'image_url'         => $request->image_url
             ]);
+
+            // Calculate initial urgency
+            try {
+                $this->calculateUrgency($appointment);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::warning('calculateUrgency failed: ' . $e->getMessage());
+            }
 
             // Sync to master pasien table (non-critical — don't fail if this errors)
             try {
@@ -253,16 +252,12 @@ class AppointmentController extends Controller
                 \Illuminate\Support\Facades\Log::warning('syncToMasterPasien failed: ' . $e->getMessage());
             }
 
-            // AI analysis & Late-Fusion Triage
-            try {
-                $this->runAiAnalysis($appointment);
-            } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::warning('Late-Fusion AI Analysis on store failed: ' . $e->getMessage());
-                // Fallback to local rule-based urgency calculation
+            // AI analysis: trigger automatically on creation if image exists
+            if ($appointment->image_url) {
                 try {
-                    $this->calculateUrgency($appointment);
-                } catch (\Exception $ex) {
-                    \Illuminate\Support\Facades\Log::warning('calculateUrgency fallback failed: ' . $ex->getMessage());
+                    $this->runAiAnalysis($appointment);
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning('AI Analysis on store failed: ' . $e->getMessage());
                 }
             }
 
@@ -495,98 +490,46 @@ class AppointmentController extends Controller
 
     private function runAiAnalysis(Appointment $appointment): ?array
     {
-        $cnnPrediction = 'tidak ada foto';
-        $cnnConfidence = 0.0;
-
-        // 1. Run CNN prediction if image_url exists
-        if ($appointment->image_url) {
-            try {
-                $filename = basename($appointment->image_url);
-
-                // Check paths
-                $imagePath = storage_path('app/public/xrays/' . $filename);
-                if (!file_exists($imagePath)) {
-                    $imagePath = storage_path('app/private/public/xrays/' . $filename);
-                }
-
-                if (file_exists($imagePath)) {
-                    $baseUrl = config('services.ml.url', 'http://127.0.0.1:8002/predict');
-                    $baseUrl = rtrim(str_replace('/predict', '', $baseUrl), '/');
-                    $predictUrl = $baseUrl . '/predict';
-
-                    $response = \Illuminate\Support\Facades\Http::attach(
-                        'file', file_get_contents($imagePath), $filename
-                    )->post($predictUrl);
-
-                    if ($response->successful()) {
-                        $mlResult = $response->json();
-                        $cnnPrediction = $mlResult['prediction'] ?? 'non-karies';
-                        $cnnConfidence = floatval($mlResult['confidence'] ?? 0.0);
-                    }
-                }
-            } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::warning('CNN prediction failed: ' . $e->getMessage());
-            }
-        }
-
-        // Save CNN prediction inside questionnaire for backward compatibility
-        $questionnaire = $appointment->questionnaire ?? [];
-        $questionnaire['ai_analysis'] = [
-            'prediction' => $cnnPrediction,
-            'confidence' => $cnnConfidence
-        ];
-        $appointment->questionnaire = $questionnaire;
-        $appointment->save();
-
-        // 2. Call LLM Triage Endpoint
         try {
-            $baseUrl = config('services.ml.url', 'http://127.0.0.1:8002/predict');
-            $baseUrl = rtrim(str_replace('/predict', '', $baseUrl), '/');
-            $triageUrl = $baseUrl . '/triage';
+            $filename = basename($appointment->image_url);
 
-            $geminiApiKey = env('GEMINI_API_KEY');
+            // Check new public disk path first, then fallback to old private path
+            $imagePath = storage_path('app/public/xrays/' . $filename);
+            if (!file_exists($imagePath)) {
+                $imagePath = storage_path('app/private/public/xrays/' . $filename);
+            }
 
-            $payload = [
-                'keluhan' => $appointment->keluhan_utama ?? '',
-                'questionnaire' => $appointment->questionnaire ?? [],
-                'cnn_prediction' => $cnnPrediction,
-                'cnn_confidence' => $cnnConfidence,
-                'gemini_api_key' => $geminiApiKey
-            ];
+            if (!file_exists($imagePath)) {
+                return null;
+            }
 
-            $response = \Illuminate\Support\Facades\Http::post($triageUrl, $payload);
+            $response = \Illuminate\Support\Facades\Http::attach(
+                'file', file_get_contents($imagePath), $filename
+            )->post(config('services.ml.url', 'http://127.0.0.1:8002/predict'));
 
             if ($response->successful()) {
-                $llmResult = $response->json();
+                $mlResult = $response->json();
 
-                // Save LLM results directly to new columns
-                $appointment->anamnesis_draft = $llmResult['anamnesis_draft'] ?? null;
-                $appointment->ai_triage_analysis = $llmResult;
-                $appointment->urgency_score = intval($llmResult['urgency_score'] ?? 0);
+                $questionnaire = $appointment->questionnaire ?? [];
+                $questionnaire['ai_analysis'] = [
+                    'prediction' => $mlResult['prediction'] ?? 'Unknown',
+                    'confidence' => $mlResult['confidence'] ?? 0
+                ];
 
-                // Standardize priority level
-                $llmUrgency = $llmResult['urgency_level'] ?? 'Rendah';
-                if (strcasecmp($llmUrgency, 'Tinggi') === 0 || strcasecmp($llmUrgency, 'HIGH') === 0) {
-                    $appointment->priority_level = 'Tinggi';
-                } elseif (strcasecmp($llmUrgency, 'Sedang') === 0 || strcasecmp($llmUrgency, 'MEDIUM') === 0) {
-                    $appointment->priority_level = 'Sedang';
-                } else {
-                    $appointment->priority_level = 'Rendah';
-                }
-
+                $appointment->questionnaire = $questionnaire;
                 $appointment->save();
 
-                return $llmResult;
+                // Recalculate urgency score with AI analysis results included
+                try {
+                    $this->calculateUrgency($appointment);
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning('calculateUrgency in AI analysis failed: ' . $e->getMessage());
+                }
+
+                return $questionnaire['ai_analysis'];
             }
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('LLM Triage prediction failed: ' . $e->getMessage());
-        }
-
-        // Fallback: run local rule-based urgency if LLM fails
-        try {
-            $this->calculateUrgency($appointment);
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::warning('Fallback calculateUrgency failed: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('AI Prediction Error: ' . $e->getMessage());
         }
 
         return null;

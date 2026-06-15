@@ -5,4 +5,3 @@ tf-keras
 pillow
 python-multipart
 numpy
-google-generativeai
