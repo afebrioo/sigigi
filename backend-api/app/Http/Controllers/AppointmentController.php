@@ -367,9 +367,12 @@ class AppointmentController extends Controller
                         foreach ($locations as $loc) {
                             // Parse "23D" -> nomorGigi="23", posisiGigi="D"
                             preg_match('/^(\d+)([A-Za-z]?)$/', $loc, $matches);
-                            $nomorGigi = $matches[1] ?? $loc;
-                            $rawPos    = isset($matches[2]) ? strtoupper($matches[2]) : null;
-                            $posisiGigi = in_array($rawPos, $allowedPositions) ? $rawPos : null;
+                            $nomorGigi = isset($matches[1]) && $matches[1] !== '' ? $matches[1] : $loc;
+                            if (empty($nomorGigi)) {
+                                $nomorGigi = '00';
+                            }
+                            $rawPos    = isset($matches[2]) && $matches[2] !== '' ? strtoupper($matches[2]) : null;
+                            $posisiGigi = ($rawPos && in_array($rawPos, $allowedPositions)) ? $rawPos : 'O';
 
                             \App\Models\RekamMedisTindakan::create([
                                 'id_rekam_medis'          => $rekamMedis->id_rekam_medis,
@@ -380,8 +383,8 @@ class AppointmentController extends Controller
                                 'catatan_tindakan'        => $treatment['catatan'] ?? null,
                             ]);
 
-                            // Hanya update odontogram jika posisi gigi valid
-                            if ($posisiGigi) {
+                            // Hanya update odontogram jika posisi gigi valid dan bukan default '00'
+                            if ($nomorGigi !== '00' && $rawPos && in_array($rawPos, $allowedPositions)) {
                                 DB::table('odontogram_pasien')->updateOrInsert(
                                     [
                                         'id_pasien'       => $pasien->id_pasien,
@@ -405,8 +408,8 @@ class AppointmentController extends Controller
                             'id_rekam_medis'          => $rekamMedis->id_rekam_medis,
                             'id_master_kode_penyakit' => $treatment['id_penyakit'] ?? null,
                             'id_master_tindakan'      => $treatment['id_tindakan'] ?? null,
-                            'nomor_gigi'              => null,
-                            'posisi_gigi'             => null,
+                            'nomor_gigi'              => '00',
+                            'posisi_gigi'             => 'O',
                             'catatan_tindakan'        => $treatment['catatan'] ?? null,
                         ]);
                     }
