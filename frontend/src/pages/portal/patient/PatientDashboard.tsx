@@ -368,8 +368,8 @@ export default function PatientDashboard() {
             <a
               href={
                 selectedBranch === 'cibadak'
-                  ? 'https://maps.google.com/?q=Jl.+Cibadak+No.194,+Cibadak,+Kec.+Astanaanyar,+Kota+Bandung'
-                  : 'https://maps.google.com/?q=Jl.+Grand+Hotel+No.70,+Lembang'
+                  ? 'https://maps.app.goo.gl/guZBErueCQL7k7Mw7'
+                  : 'https://maps.app.goo.gl/kh73Jmt4aVNppV5L6'
               }
               target="_blank"
               rel="noopener noreferrer"
@@ -384,7 +384,7 @@ export default function PatientDashboard() {
           <div className="flex-1 h-[300px] md:h-auto min-h-[280px] rounded-3xl overflow-hidden border border-slate-100 shadow-inner relative z-10 group">
             {selectedBranch === 'cibadak' ? (
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.8123282218776!2d107.5976527!3d-6.918991200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e624f11f4cc5%3A0x6bcfd30e54d8f8a8!2sJl.%20Cibadak%20No.194%2C%20Cibadak%2C%20Kec.%20Astanaanyar%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040241!5e0!3m2!1sid!2sid!4v1717750100000!5m2!1sid!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.3!2d107.5974359!3d-6.9213792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e61881112b53%3A0x5b6b42b5f928cbe4!2sDrg.+Marlin+H,.+Sp.+Ort!5e0!3m2!1sid!2sid!4v1718500000000!5m2!1sid!2sid"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -395,7 +395,7 @@ export default function PatientDashboard() {
               />
             ) : (
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.3533816656717!2d107.616335!3d-6.8119864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e05c8cc087bd%3A0x868c2f1f0a8d6268!2sJl.%20Grand%20Hotel%20No.70%2C%20Lembang%2C%20Kec.%20Lembang%2C%20Kabupaten%20Bandung%20Barat%2C%20Jawa%20Barat%2040391!5e0!3m2!1sid!2sid!4v1717750200000!5m2!1sid!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.6!2d107.6166118!3d-6.8158868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e11cbe783909%3A0xae45eb3eea2e08fc!2sDrg.+Marlin+H,.+Sp+Ort!5e0!3m2!1sid!2sid!4v1718500000000!5m2!1sid!2sid"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

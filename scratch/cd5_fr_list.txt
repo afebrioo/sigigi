@@ -1,0 +1,47 @@
+﻿=== TABLE 4 (FR list) ===
+['Kode', 'Fitur yang Diuji', 'Tujuan Pengujian']
+['FR-01', 'Pendaftaran akun, login, dan hak akses', 'Memastikan pengguna dapat masuk sesuai peran dan akses dibatasi berdasarkan role']
+['FR-02', 'Appointment online, urgensi, dan AI', 'Memastikan appointment, form keluhan, upload foto, rule-based, dan AI berjalan']
+['FR-03', 'Pemantauan antrean', 'Memastikan antrean tampil sesuai data terbaru pada sistem']
+['FR-04', 'Detail pasien dokter', 'Memastikan dokter dapat melihat data pasien, keluhan, foto, dan hasil AI']
+['FR-05', 'Rekam medis dan PDF', 'Memastikan dokter dapat mencatat rekam medis dan pasien dapat mengunduh PDF']
+['FR-06', 'Pembayaran/kasir', 'Memastikan admin/kasir dapat menghitung biaya dan mengubah status pembayaran']
+['FR-07', 'Data master', 'Memastikan admin dapat melakukan CRUD data master klinik']
+['FR-08', 'WhatsApp klinik', 'Memastikan tombol WhatsApp mengarah ke nomor admin klinik']
+
+=== TABLE 5 (NF list) ===
+['Kode', 'Parameter', 'Tujuan Pengujian']
+['NF-01', 'Booking Availability', 'Memastikan halaman booking dapat diakses dan server memberi respons normal']
+['NF-02', 'Data Security', 'Memastikan data dikirim aman, password terenkripsi, dan akses dibatasi role']
+['NF-03', 'Responsive Interface', 'Memastikan tampilan tetap rapi pada mobile, tablet, dan desktop']
+['NF-04', 'User Interaction Efficiency', 'Memastikan pasien, dokter, dan admin dapat menyelesaikan tugas utama tanpa kesulitan']
+['NF-05', 'Page Load Time', 'Memastikan halaman utama dapat dimuat dalam waktu yang ditentukan']
+
+=== TABLE 6 (FR-01) ===
+['Komponen', 'Keterangan']
+['Kode', 'FR-01']
+['Nama Spesifikasi', 'Pendaftaran Akun, Login, & Hak Akses']
+['Skenario Pengujian', 'Staf melakukan registrasi pasien baru melalui antarmuka UI dan menggunakan Google Sign-In. Apabila akun Google belum pernah terdaftar, sistem mengarahkan pengguna ke halaman pendaftaran untuk melengkapi data diri. Staf kemudian melakukan login dan mencoba mengakses halaman dashboard dokter maupun admin menggunakan akun pasien untuk memverifikasi pembatasan hak akses.']
+['Expected Result', 'Sistem berhasil membuat akun pasien baru, mengarahkan pengguna ke halaman pelengkapan data apabila akun Google belum terdaftar, serta membatasi akses halaman berdasarkan peran pengguna yang masuk (Pasien, Dokter, dan Admin).']
+['Actual Result', 'Registrasi akun pasien berhasil dilakukan melalui formulir pendaftaran dan Google Sign-In. Sistem berhasil mengarahkan pengguna untuk melengkapi data diri apabila akun belum terdaftar. Pengguna dapat login ke sistem dan pembatasan akses halaman berdasarkan peran pengguna berjalan dengan baik.']
+['Status', 'Berhasil']
+['Evidence', '']
+
+=== TABLE 7 (FR-02) ===
+['Komponen', 'Keterangan']
+['Kode', 'FR-02']
+['Nama Spesifikasi', 'Appointment Online, Tingkat Urgensi, & Analisis AI']
+['Skenario Pengujian', 'Pasien melakukan appointment dengan memilih Lokasi klinik dan jadwal kunjungan, mengisi form keluhan, dan mengunggah citra gigi.']
+['Expected Result/Kriteria Keberhasilan', 'Sistem berhasil menyimpan data appointment, menghasilkan tingkat urgensi, dan menampilkan hasil analisis AI pada dashboard dokter.']
+['Actual Result', 'Data appointment berhasil tersimpan pada database, menghasilkan tingkat urgensi Sedang, dan menampilkan hasil AI Karies pada dashboard dokter.']
+['Status', 'Berhasil']
+
+=== TABLE 8 (FR-03) ===
+['Komponen', 'Keterangan']
+['Kode', 'FR-03']
+['Nama Spesifikasi', 'Pemantauan Antrean Pasien']
+['Skenario Pengujian', 'Pasien membuka halaman lihat antrean untuk memeriksa nomor antrean, urutan pasien yang sedang dilayani, estimasi waktu pelayanan, dan status antrean. Setelah dokter mengubah status salah satu pasien, penguji melakukan refresh halaman antrean untuk memastikan data yang ditampilkan telah diperbarui sesuai data terbaru pada database.']
+['Expected Result', 'Sistem menampilkan informasi antrean pasien secara lengkap, meliputi nomor antrean, daftar antrean, estimasi waktu pelayanan, dan status pasien. Setelah halaman diperbarui, data antrean yang tampil sesuai dengan perubahan status terbaru pada database. Nama pasien lain disamarkan untuk menjaga privasi pasien.']
+['Actual Result', 'Informasi antrean berhasil ditampilkan pada halaman pasien, meliputi nomor antrean, daftar antrean, estimasi waktu pelayanan, dan status pasien. Setelah dilakukan perubahan status pasien oleh dokter, data antrean berhasil diperbarui dan ditampilkan sesuai dengan data terbaru pada database setelah halaman di-refresh. Selain itu, nama pasien lain pada daftar antrean berhasil disamarkan secara otomatis sehingga privasi pasien tetap terjaga.']
+['Status', 'Berhasil']
+['Evidence', '']
