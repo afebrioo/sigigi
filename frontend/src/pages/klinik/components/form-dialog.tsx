@@ -89,7 +89,7 @@ export function FormDialog({
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      await onSubmit(values)
+      await onSubmit(values as KlinikFormData)
       onOpenChange(false)
       form.reset()
     } catch (error) {
