@@ -19,9 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [],
 
     'allowed_origins_patterns' => [
+        '#^https?://.*$#',
         '#^http://192\.168\.\d+\.\d+(:\d+)?$#',
         '#^http://10\.\d+\.\d+\.\d+(:\d+)?$#',
         '#^http://172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+(:\d+)?$#',
@@ -33,6 +34,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];
