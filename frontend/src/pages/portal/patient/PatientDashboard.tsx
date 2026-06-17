@@ -353,12 +353,12 @@ export default function PatientDashboard() {
                   <p className="text-sm font-black text-slate-700 italic">
                     WA:{' '}
                     <a
-                      href="https://wa.me/6287838590000"
+                      href="https://wa.me/6287838595695"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800 hover:underline"
                     >
-                      +62 878-3859-••••
+                      +62 878-3859-5695
                     </a>
                   </p>
                 </div>
