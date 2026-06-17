@@ -97,7 +97,23 @@ class MasterKlinikController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $klinik = MasterKlinik::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'data' => $klinik
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data klinik tidak ditemukan'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -105,7 +121,45 @@ class MasterKlinikController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->checkNotPatient();
+        try {
+            $klinik = MasterKlinik::findOrFail($id);
+
+            $validator = Validator::make($request->all(), [
+                'nama_klinik'       => 'required|string|max:100',
+                'alamat_klinik'     => 'nullable|string',
+                'telepon'           => 'nullable|string|max:20',
+                'email'             => 'nullable|email|max:100',
+                'no_izin_klinik'    => 'nullable|string|max:50',
+                'jam_operasional'   => 'nullable|string|max:100',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Validasi gagal',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            $klinik->update($request->all());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data klinik berhasil diperbarui',
+                'data' => $klinik
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data klinik tidak ditemukan'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -113,7 +167,26 @@ class MasterKlinikController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->checkNotPatient();
+        try {
+            $klinik = MasterKlinik::findOrFail($id);
+            $klinik->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data klinik berhasil dihapus'
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data klinik tidak ditemukan'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function list() {

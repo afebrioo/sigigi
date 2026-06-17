@@ -34,9 +34,13 @@ class AuthController extends Controller
         // Simpan sesi user
         Session::put('user', $user->id_users);
 
+        // Buat token Sanctum
+        $token = $user->createToken('admin-token')->plainTextToken;
+
         return response()->json([
             'success' => true,
             'message' => 'Login berhasil',
+            'token' => $token,
             'user' => [
                 'id_users' => $user->id_users,
                 'username' => $user->username,

@@ -196,6 +196,13 @@ class AppointmentController extends Controller
                 'kontak_darurat_relasi'  => 'nullable|string'
             ]);
 
+            // Validasi jadwal operasional klinik
+            $clinicId = $request->id_klinik ?? 1;
+            $scheduleError = $this->validateClinicSchedule($clinicId, $request->appointment_date, $request->appointment_time);
+            if ($scheduleError) {
+                return response()->json(['message' => $scheduleError], 422);
+            }
+
             // Only assign user_id if the request comes from a PATIENT role user.
             // Doctors/admins create appointments on behalf of walk-in patients → user_id = null
             $userId = null;
@@ -447,9 +454,16 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Forbidden'], 403);
         }
 
-        if ($request->has('appointment_date') || $request->has('appointment_time')) {
+        if ($request->has('appointment_date') || $request->has('appointment_time') || $request->has('id_klinik')) {
             $date = $request->input('appointment_date', $appointment->appointment_date);
             $time = $request->input('appointment_time', $appointment->appointment_time);
+            $clinicId = $request->input('id_klinik', $appointment->id_klinik ?? 1);
+
+            // Validasi jadwal operasional klinik
+            $scheduleError = $this->validateClinicSchedule($clinicId, $date, $time);
+            if ($scheduleError) {
+                return response()->json(['message' => $scheduleError], 422);
+            }
 
             $timeToCheck1 = str_replace('.', ':', $time);
             $timeToCheck2 = str_replace(':', '.', $time);
@@ -640,6 +654,48 @@ class AppointmentController extends Controller
         }
 
         return collect($items);
+    }
+
+    private function validateClinicSchedule($idKlinik, $date, $time)
+    {
+        $timestamp = strtotime($date);
+        $dayOfWeek = date('N', $timestamp); // 1 (Senin) - 7 (Minggu)
+        
+        $normalizedTime = str_replace(':', '.', $time);
+        $hour = floatval($normalizedTime);
+
+        // Klinik Lembang (ID: 1)
+        if ($idKlinik == 1) {
+            // Hanya Jumat (5)
+            if ($dayOfWeek != 5) {
+                return 'Klinik Lembang hanya buka pada hari Jumat.';
+            }
+            // Jam 16.00 - 20.00
+            if ($hour < 16.0 || $hour > 20.0) {
+                return 'Jam operasional Klinik Lembang adalah 16.00 - 20.00.';
+            }
+        }
+        // Klinik Cibadak (ID: 2)
+        elseif ($idKlinik == 2) {
+            // Tutup Jumat (5) & Minggu (7)
+            if ($dayOfWeek == 5 || $dayOfWeek == 7) {
+                return 'Klinik Cibadak tutup pada hari Jumat dan Minggu.';
+            }
+            // Senin-Kamis (1-4): 16.00 - 20.00
+            if ($dayOfWeek >= 1 && $dayOfWeek <= 4) {
+                if ($hour < 16.0 || $hour > 20.0) {
+                    return 'Jam operasional Klinik Cibadak pada hari Senin-Kamis adalah 16.00 - 20.00.';
+                }
+            }
+            // Sabtu (6): 16.00 - 18.00
+            elseif ($dayOfWeek == 6) {
+                if ($hour < 16.0 || $hour > 18.0) {
+                    return 'Jam operasional Klinik Cibadak pada hari Sabtu adalah 16.00 - 18.00.';
+                }
+            }
+        }
+
+        return null;
     }
 
     private function getKondisiGigiDariTindakan($treatmentID) {

@@ -117,6 +117,44 @@ export default function NewAppointmentPage() {
     fetchBookedTimes();
   }, [formData.tanggalKunjungan, formData.id_klinik]);
 
+  const getAvailableTimeSlots = () => {
+    if (!formData.tanggalKunjungan || !formData.id_klinik) {
+      return [];
+    }
+
+    const dateObj = new Date(formData.tanggalKunjungan);
+    const dayOfWeek = dateObj.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
+
+    // Klinik Lembang (ID: 1): Hanya Jumat (5), 16.00 - 20.00
+    if (formData.id_klinik === '1') {
+      if (dayOfWeek === 5) {
+        return ['16.00', '17.00', '18.00', '19.00', '20.00'];
+      }
+      return [];
+    }
+
+    // Klinik Cibadak (ID: 2): Senin - Kamis (1-4) jam 16-20, Sabtu (6) jam 16-18
+    if (formData.id_klinik === '2') {
+      if (dayOfWeek >= 1 && dayOfWeek <= 4) {
+        return ['16.00', '17.00', '18.00', '19.00', '20.00'];
+      }
+      if (dayOfWeek === 6) {
+        return ['16.00', '17.00', '18.00'];
+      }
+      return [];
+    }
+
+    return [];
+  };
+
+  // Reset selected time slot if it's no longer available under new date/clinic selection
+  useEffect(() => {
+    const availableSlots = getAvailableTimeSlots();
+    if (formData.waktuKunjungan && !availableSlots.includes(formData.waktuKunjungan)) {
+      setFormData(prev => ({ ...prev, waktuKunjungan: '' }));
+    }
+  }, [formData.tanggalKunjungan, formData.id_klinik]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.tanggalKunjungan || !formData.waktuKunjungan) {
@@ -127,6 +165,31 @@ export default function NewAppointmentPage() {
       });
       return;
     }
+
+    const dateObj = new Date(formData.tanggalKunjungan);
+    const dayOfWeek = dateObj.getDay();
+
+    // Validasi hari buka klinik
+    if (formData.id_klinik === '1') {
+      if (dayOfWeek !== 5) {
+        toast({
+          title: "Klinik Tutup",
+          description: "Klinik Lembang hanya buka pada hari Jumat (Jam 16.00 - 20.00).",
+          variant: "destructive"
+        });
+        return;
+      }
+    } else if (formData.id_klinik === '2') {
+      if (dayOfWeek === 0 || dayOfWeek === 5) {
+        toast({
+          title: "Klinik Tutup",
+          description: "Klinik Cibadak tutup pada hari Jumat dan Minggu. Jadwal buka: Senin - Kamis (16.00 - 20.00) dan Sabtu (16.00 - 18.00).",
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
     if (bookedTimes.includes(formData.waktuKunjungan)) {
       toast({
         title: "Jadwal Bentrok",
@@ -146,10 +209,7 @@ export default function NewAppointmentPage() {
   };
 
   const today = new Date().toISOString().split('T')[0];
-  const timeSlots = Array.from({ length: 12 }, (_, i) => {
-    const hour = (i + 9).toString().padStart(2, '0');
-    return `${hour}.00`;
-  });
+  const timeSlots = getAvailableTimeSlots();
 
   return (
     <PortalLayout role="patient">

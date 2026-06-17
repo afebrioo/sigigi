@@ -152,10 +152,10 @@ class PortalAuthController extends Controller
             ['token' => Hash::make($token), 'created_at' => now()]
         );
 
-        // TODO: Configure mailer. For now returning the token for testing.
-        // \Illuminate\Support\Facades\Mail::raw("Token reset password Anda: $token\nSilakan gunakan token ini untuk mereset password Anda.", function($msg) use ($request) {
-        //     $msg->to($request->email)->subject('Reset Password');
-        // });
+        // Kirim email (menggunakan log mailer default)
+        \Illuminate\Support\Facades\Mail::raw("Token reset password Anda: $token\nSilakan gunakan token ini untuk mereset password Anda.", function($msg) use ($request) {
+            $msg->to($request->email)->subject('Reset Password');
+        });
 
         $response = [
             'success' => true,
@@ -181,6 +181,13 @@ class PortalAuthController extends Controller
 
         if (!$reset || !Hash::check($request->token, $reset->token)) {
             return response()->json(['success' => false, 'message' => 'Token tidak valid.'], 400);
+        }
+
+        // Cek kedaluwarsa token (60 menit)
+        $createdAt = \Carbon\Carbon::parse($reset->created_at);
+        if ($createdAt->addMinutes(60)->isPast()) {
+            DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            return response()->json(['success' => false, 'message' => 'Token reset password telah kedaluwarsa.'], 400);
         }
 
         $user = User::where('email', $request->email)->first();

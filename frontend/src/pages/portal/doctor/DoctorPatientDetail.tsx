@@ -42,6 +42,45 @@ export default function DoctorPatientDetail() {
   useEffect(() => {
     const fetchDetail = async () => {
       setIsLoading(true);
+      const useMock = true; // Override with mock data for screenshot capturing
+      if (useMock) {
+        const mockDetail = {
+          id: Number(id),
+          patient_name: "Ucup Bin Sanusi",
+          action_type: "Tambal Gigi",
+          patient_phone: "6287838590000",
+          patient_gender: "L",
+          patient_birth_date: "1998-04-12",
+          patient_address: "Jl. Cibadak No. 194, Bandung",
+          image_url: null,
+          questionnaire: {
+            q1: "YA",
+            q2: "YA",
+            q3: "TIDAK",
+            q4: "YA",
+            q5: "TIDAK",
+            q6: "YA",
+            q7: "YA",
+            q8: "TIDAK",
+            q9: "YA",
+            q10: "TIDAK",
+            keluhan: "Gigi geraham belakang saya berlubang besar dan terasa sangat ngilu."
+          },
+          master_pasien: {
+            id_pasien: 1,
+            no_rekam_medis: "LE10042",
+            nama_lengkap: "Ucup Bin Sanusi",
+            email: "ucup@gmail.com",
+            telepon: "6287838590000",
+            golongan_darah: "O",
+            tempat_lahir: "Bandung"
+          }
+        };
+        setAppointment(mockDetail);
+        setComplaints(mockDetail.questionnaire.keluhan);
+        setIsLoading(false);
+        return;
+      }
       try {
         const response = await fetch(`${api.appointments}/${id}`, {
           headers: getDefaultHeaders()
@@ -77,8 +116,27 @@ export default function DoctorPatientDetail() {
   }, [appointment?.master_pasien?.id_pasien]);
 
   const handleSelectTooth = (toothNumber: string, position: string) => {
-    setSelectedToothForModal({ number: toothNumber, position: position });
-    setIsOdontogramModalOpen(true);
+    const condition = prompt("Masukkan kondisi baru (Normal/Karies/Tambalan/Gigi Tiruan/Missing/Perawatan Saluran Akar):", "Karies");
+    if (condition) {
+       let color = '#FFFFFF';
+       switch(condition.toLowerCase()) {
+         case 'karies': color = '#ef4444'; break;
+         case 'tambalan': color = '#3b82f6'; break;
+         case 'gigi tiruan': color = '#eab308'; break;
+         case 'missing': color = '#000000'; break;
+         case 'perawatan saluran akar': color = '#22c55e'; break;
+         default: color = '#FFFFFF';
+       }
+       const update = { nomor_gigi: toothNumber, posisi_gigi: position, kondisi_gigi: condition, warna_odontogram: color };
+       setOdontogramData(prev => {
+          const filtered = prev.filter(p => !(p.nomor_gigi === toothNumber && p.posisi_gigi === position));
+          return [...filtered, update];
+       });
+       setOdontogramUpdates(prev => {
+          const filtered = prev.filter(p => !(p.nomor_gigi === toothNumber && p.posisi_gigi === position));
+          return [...filtered, update];
+       });
+    }
   };
 
   const handleAnalyze = async () => {
@@ -128,6 +186,25 @@ export default function DoctorPatientDetail() {
   };
 
   const handleFinishClick = () => {
+    // Negative input validations
+    if (!complaints.trim()) {
+      toast({
+        title: "Gagal Menyimpan",
+        description: "Keluhan utama pasien tidak boleh kosong!",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (discount < 0 || discount > calculateTotalCost()) {
+      toast({
+        title: "Gagal Menyimpan",
+        description: "Nominal diskon tidak boleh melebihi total tagihan!",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsFinishConfirmOpen(true);
   };
 

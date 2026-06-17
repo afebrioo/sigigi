@@ -75,10 +75,11 @@ class Dashboard extends Model
     {
         $today = date('Y-m-d');
 
-        return DB::table('dokter_klinik')
+        $schedules = DB::table('dokter_klinik')
             ->join('dokter', 'dokter_klinik.id_dokter', '=', 'dokter.id_dokter')
             ->join('klinik', 'dokter_klinik.id_klinik', '=', 'klinik.id_klinik')
             ->select(
+                'dokter_klinik.id_dokter_klinik',
                 'dokter.nama_dokter',
                 'dokter_klinik.jadwal_praktek',
                 'klinik.nama_klinik',
@@ -86,9 +87,74 @@ class Dashboard extends Model
                           WHERE rekam_medis_pasien.id_dokter_klinik = dokter_klinik.id_dokter_klinik 
                           AND DATE(rekam_medis_pasien.tanggal_kunjungan) = "' . $today . '") as jumlah_pasien')
             )
-            ->where(DB::raw('FIND_IN_SET(DAYNAME("' . $today . '"), REPLACE(REPLACE(dokter_klinik.jadwal_praktek, " ", ""), ",", ","))'), '>', 0)
             ->orderBy('jumlah_pasien', 'desc')
             ->get();
+
+        $dayMap = [
+            'Sunday' => 'Minggu',
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+        ];
+        $todayDayName = $dayMap[date('l')] ?? '';
+
+        $filtered = $schedules->filter(function ($item) use ($todayDayName) {
+            return self::checkJadwalHari($item->jadwal_praktek, $todayDayName);
+        });
+
+        return $filtered->values();
+    }
+
+    private static function checkJadwalHari($jadwalPraktek, $targetDay)
+    {
+        if (empty($jadwalPraktek)) {
+            return false;
+        }
+
+        $daysOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+        $dayIndexes = array_flip($daysOrder);
+
+        $parts = explode(',', $jadwalPraktek);
+        foreach ($parts as $part) {
+            $part = trim($part);
+            if (empty($part)) {
+                continue;
+            }
+
+            $subParts = explode(':', $part);
+            $dayPart = trim($subParts[0]);
+
+            if (strpos($dayPart, '-') !== false) {
+                $range = explode('-', $dayPart);
+                $startDay = trim($range[0]);
+                $endDay = trim($range[1]);
+
+                if (isset($dayIndexes[$startDay]) && isset($dayIndexes[$endDay]) && isset($dayIndexes[$targetDay])) {
+                    $startIndex = $dayIndexes[$startDay];
+                    $endIndex = $dayIndexes[$endDay];
+                    $targetIndex = $dayIndexes[$targetDay];
+
+                    if ($startIndex <= $endIndex) {
+                        if ($targetIndex >= $startIndex && $targetIndex <= $endIndex) {
+                            return true;
+                        }
+                    } else {
+                        if ($targetIndex >= $startIndex || $targetIndex <= $endIndex) {
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                if (strcasecmp($dayPart, $targetDay) === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

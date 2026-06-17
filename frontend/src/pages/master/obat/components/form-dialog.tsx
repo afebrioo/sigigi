@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/hooks/use-toast"
 import {
   Dialog,
   DialogContent,
@@ -57,6 +58,7 @@ export function FormDialog({
   onSubmit,
   loading = false 
 }: FormDialogProps) {
+  const { toast } = useToast()
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -90,6 +92,14 @@ export function FormDialog({
     }
   }
 
+  const onInvalid = () => {
+    toast({
+      variant: "destructive",
+      title: "Gagal Menyimpan Data",
+      description: "Nama obat wajib diisi minimal 3 karakter dan satuan harus dipilih."
+    })
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
@@ -105,7 +115,7 @@ export function FormDialog({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(handleSubmit, onInvalid)} className="space-y-4">
             <FormField
               control={form.control}
               name="nama_obat"

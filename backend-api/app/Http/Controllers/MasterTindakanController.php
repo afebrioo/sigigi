@@ -78,7 +78,7 @@ class MasterTindakanController extends Controller
         }
 
         $request->validate([
-            'nama_penyakit' => 'sometimes|string|max:100'
+            'nama_tindakan' => 'sometimes|string|max:100'
         ]);
 
         $tindakan->update($request->all());
