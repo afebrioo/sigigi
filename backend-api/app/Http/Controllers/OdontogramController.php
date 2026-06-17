@@ -25,7 +25,12 @@ class OdontogramController extends Controller
 
             $user = request()->user();
             if ($user && $user->role === 'patient') {
-                if ($pasien->email !== $user->email && $pasien->telepon !== $user->phone_number) {
+                $activePatient = MasterPasien::where(function($q) use ($user) {
+                    if ($user->email) $q->orWhere('email', $user->email);
+                    if ($user->phone_number) $q->orWhere('telepon', $user->phone_number);
+                })->first();
+
+                if (!$activePatient || $activePatient->id_pasien !== $pasien->id_pasien) {
                     return response()->json([
                         'success' => false,
                         'message' => 'Akses ditolak.'
@@ -69,7 +74,12 @@ class OdontogramController extends Controller
 
             $user = request()->user();
             if ($user && $user->role === 'patient') {
-                if ($pasien->email !== $user->email && $pasien->telepon !== $user->phone_number) {
+                $activePatient = MasterPasien::where(function($q) use ($user) {
+                    if ($user->email) $q->orWhere('email', $user->email);
+                    if ($user->phone_number) $q->orWhere('telepon', $user->phone_number);
+                })->first();
+
+                if (!$activePatient || $activePatient->id_pasien !== $pasien->id_pasien) {
                     return response()->json([
                         'success' => false,
                         'message' => 'Akses ditolak.'

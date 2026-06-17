@@ -30,7 +30,7 @@ const formSchema = z.object({
   no_str: z.string().optional().default(""),
   spesialis: z.string().optional().default(""),
   telepon: z.string().optional().default(""),
-  email: z.string().email("Format email tidak valid").optional().default(""),
+  email: z.string().email("Format email tidak valid").or(z.literal("")).optional(),
 })
 
 type FormValues = z.infer<typeof formSchema>

@@ -40,7 +40,7 @@ const formSchema = z.object({
   jenis_kelamin: z.enum(["L", "P"]).nullable().optional(),
   alamat: z.string().optional().default(""),
   telepon: z.string().optional().default(""),
-  email: z.string().email("Format email tidak valid").optional().default(""),
+  email: z.string().email("Format email tidak valid").or(z.literal("")).optional(),
   golongan_darah: z.enum(["A", "B", "AB", "O"]).nullable().optional(),
   kontak_darurat_nama: z.string().optional().default(""),
   kontak_darurat_telepon: z.string().optional().default(""),

@@ -47,10 +47,16 @@ class Dashboard extends Model
             ? round((($treatmentsThisMonth - $treatmentsLastMonth) / $treatmentsLastMonth) * 100) 
             : 0;
 
-        // Pendapatan Bulan Ini (Estimate from completed appointments * fixed rate or lookup)
-        // For now, let's assume average 200k per treatment as a placeholder if no price table linked
-        $revenueThisMonth = $treatmentsThisMonth * 200000;
-        $revenueLastMonth = $treatmentsLastMonth * 200000;
+        // Pendapatan Bulan Ini (Sum of biaya from rekam_medis_pasien table)
+        $revenueThisMonth = (int)DB::table('rekam_medis_pasien')
+            ->whereMonth('tanggal_kunjungan', $currentMonth)
+            ->whereYear('tanggal_kunjungan', $currentYear)
+            ->sum('biaya');
+
+        $revenueLastMonth = (int)DB::table('rekam_medis_pasien')
+            ->whereMonth('tanggal_kunjungan', $lastMonth)
+            ->whereYear('tanggal_kunjungan', $lastMonthYear)
+            ->sum('biaya');
 
         $revenuePercentChange = $revenueLastMonth > 0 
             ? round((($revenueThisMonth - $revenueLastMonth) / $revenueLastMonth) * 100) 
@@ -228,14 +234,10 @@ class Dashboard extends Model
 
         $result = [];
         foreach ($months as $month) {
-            $count = DB::table('appointments')
-                ->where('status', 'completed')
-                ->whereMonth('appointment_date', $month['month_num'])
-                ->whereYear('appointment_date', $currentYear)
-                ->count();
-            
-            // Assume 200k per treatment
-            $revenue = $count * 200000;
+            $revenue = (int)DB::table('rekam_medis_pasien')
+                ->whereMonth('tanggal_kunjungan', $month['month_num'])
+                ->whereYear('tanggal_kunjungan', $currentYear)
+                ->sum('biaya');
 
             $result[] = [
                 'name' => $month['month'],

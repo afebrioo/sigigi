@@ -67,6 +67,8 @@ Route::prefix('dokter')->group(function () {
 Route::prefix('dokter-klinik')->group(function () {
     Route::get('/', [DokterKlinikController::class, 'index']);
     Route::post('/', [DokterKlinikController::class, 'store']);
+    Route::get('/klinik/{klinikId}/dokters', [DokterKlinikController::class, 'getDoktersByKlinik']);
+    Route::get('/dokter/{dokterId}/kliniks', [DokterKlinikController::class, 'getKliniksByDokter']);
     Route::get('/{id}', [DokterKlinikController::class, 'show']);
     Route::put('/{id}', [DokterKlinikController::class, 'update']);
     Route::delete('/{id}', [DokterKlinikController::class, 'destroy']);

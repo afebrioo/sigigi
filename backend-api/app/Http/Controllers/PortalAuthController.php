@@ -44,8 +44,7 @@ class PortalAuthController extends Controller
             ]);
 
             // Create Master Pasien record
-            $count = \App\Models\MasterPasien::count() + 1;
-            $noRekamMedis = 'CIB' . str_pad($count, 5, '0', STR_PAD_LEFT);
+            $noRekamMedis = $this->generateRekamMedisNumber(1);
 
             $pasien = \App\Models\MasterPasien::create([
                 'id_klinik' => 1, // Default clinic ID
@@ -337,8 +336,7 @@ class PortalAuthController extends Controller
             ]);
 
             // Create Master Pasien record
-            $count = \App\Models\MasterPasien::count() + 1;
-            $noRekamMedis = 'CIB' . str_pad($count, 5, '0', STR_PAD_LEFT);
+            $noRekamMedis = $this->generateRekamMedisNumber(1);
 
             $pasien = \App\Models\MasterPasien::create([
                 'id_klinik' => 1,
@@ -431,8 +429,7 @@ class PortalAuthController extends Controller
             $pasien = \App\Models\MasterPasien::where('email', $user->email)->first();
 
             if (!$pasien) {
-                $count = \App\Models\MasterPasien::count() + 1;
-                $noRekamMedis = 'CIB' . str_pad($count, 5, '0', STR_PAD_LEFT);
+                $noRekamMedis = $this->generateRekamMedisNumber(1);
                 
                 $pasien = \App\Models\MasterPasien::create([
                     'id_klinik' => 1, // Default clinic ID
@@ -491,5 +488,30 @@ class PortalAuthController extends Controller
                 ]
             ]
         ]);
+    }
+
+    private function generateRekamMedisNumber($id_klinik)
+    {
+        $prefix = 'RM';
+        try {
+            $klinik = \App\Models\MasterKlinik::find($id_klinik);
+            if ($klinik) {
+                $namaKlinik = preg_replace('/^Klinik\s+/i', '', $klinik->nama_klinik);
+                $prefix = strtoupper(substr($namaKlinik, 0, 3));
+            }
+        } catch (\Exception $e) {}
+
+        $lastNumber = \App\Models\MasterPasien::where('no_rekam_medis', 'like', $prefix.'%')
+            ->orderBy('no_rekam_medis', 'desc')
+            ->value('no_rekam_medis');
+        
+        if ($lastNumber) {
+            preg_match('/[A-Z]+(\d+)/', $lastNumber, $matches);
+            $nextNumber = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+        } else {
+            $nextNumber = 1;
+        }
+
+        return $prefix . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
     }
 }

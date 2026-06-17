@@ -30,7 +30,7 @@ const formSchema = z.object({
     .max(100, "Nama klinik maksimal 100 karakter"),
   alamat_klinik: z.string().optional().default(""),
   telepon: z.string().optional().default(""),
-  email: z.string().email("Format email tidak valid").optional().default(""),
+  email: z.string().email("Format email tidak valid").or(z.literal("")).optional(),
   no_izin_klinik: z.string().optional().default(""),
   jam_operasional: z.string().optional().default(""),
 })

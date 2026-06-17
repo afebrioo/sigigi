@@ -210,7 +210,7 @@ class MasterHargaObatController extends Controller
                 'message' => 'Data harga obat berhasil diperbarui',
                 'data' => $hargaObat
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()

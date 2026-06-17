@@ -84,7 +84,10 @@ export const dokterKlinikService = {
   getDoktersByKlinik: async (klinikId: number): Promise<DokterKlinik[]> => {
     const response = await fetch(
       `${api.dokterKlinik}/klinik/${klinikId}/dokters`,
-      { credentials: 'include' }
+      { 
+        credentials: 'include',
+        headers: getDefaultHeaders(false),
+      }
     )
     if (!response.ok) throw new Error('Failed to fetch data')
     return response.json()
@@ -94,7 +97,10 @@ export const dokterKlinikService = {
   getKliniksByDokter: async (dokterId: number): Promise<DokterKlinik[]> => {
     const response = await fetch(
       `${api.dokterKlinik}/dokter/${dokterId}/kliniks`,
-      { credentials: 'include' }
+      { 
+        credentials: 'include',
+        headers: getDefaultHeaders(false),
+      }
     )
     if (!response.ok) throw new Error('Failed to fetch data')
     return response.json()
