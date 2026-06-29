@@ -509,6 +509,7 @@ class AppointmentController extends Controller
     {
         try {
             $filename = basename($appointment->image_url);
+            $mlUrl = config('services.ml.url', 'http://127.0.0.1:8001/predict');
 
             // Check new public disk path first, then fallback to old private path
             $imagePath = storage_path('app/public/xrays/' . $filename);
@@ -516,13 +517,26 @@ class AppointmentController extends Controller
                 $imagePath = storage_path('app/private/public/xrays/' . $filename);
             }
 
+            \Illuminate\Support\Facades\Log::info('AI Analysis: attempting', [
+                'appointment_id' => $appointment->id,
+                'image_url'      => $appointment->image_url,
+                'filename'       => $filename,
+                'image_path'     => $imagePath,
+                'file_exists'    => file_exists($imagePath),
+                'ml_url'         => $mlUrl,
+            ]);
+
             if (!file_exists($imagePath)) {
+                \Illuminate\Support\Facades\Log::warning('AI Analysis: image file not found on disk', [
+                    'appointment_id' => $appointment->id,
+                    'image_path'     => $imagePath,
+                ]);
                 return null;
             }
 
-            $response = \Illuminate\Support\Facades\Http::attach(
+            $response = \Illuminate\Support\Facades\Http::timeout(30)->attach(
                 'file', file_get_contents($imagePath), $filename
-            )->post(config('services.ml.url', 'http://127.0.0.1:8002/predict'));
+            )->post($mlUrl);
 
             if ($response->successful()) {
                 $mlResult = $response->json();
@@ -544,13 +558,24 @@ class AppointmentController extends Controller
                 }
 
                 return $questionnaire['ai_analysis'];
+            } else {
+                \Illuminate\Support\Facades\Log::warning('AI Analysis: ML API returned non-success', [
+                    'appointment_id' => $appointment->id,
+                    'status'         => $response->status(),
+                    'body'           => $response->body(),
+                    'ml_url'         => $mlUrl,
+                ]);
             }
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('AI Prediction Error: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('AI Prediction Error: ' . $e->getMessage(), [
+                'appointment_id' => $appointment->id ?? null,
+                'image_url'      => $appointment->image_url ?? null,
+            ]);
         }
 
         return null;
     }
+
 
     private function syncToMasterPasien(Appointment $appointment, array $extraData = [])
     {

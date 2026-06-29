@@ -26,6 +26,7 @@ class Appointment extends Model
         'priority_level',
     ];
 
+
     protected $casts = [
         'questionnaire' => 'array',
     ];
