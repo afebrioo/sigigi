@@ -42,7 +42,7 @@ export default function DoctorPatientDetail() {
   useEffect(() => {
     const fetchDetail = async () => {
       setIsLoading(true);
-      const useMock = true; // Override with mock data for screenshot capturing
+      const useMock = false; // Override with mock data for screenshot capturing
       if (useMock) {
         const mockDetail = {
           id: Number(id),
