@@ -62,8 +62,6 @@ class AppointmentController extends Controller
             return $a->status !== 'serving' && $a->status !== 'pending';
         });
 
-        $pending = $this->applyUrgencyQueueSwaps($pending);
-
         $appointments = $serving->merge($pending)->merge($others);
 
         foreach ($appointments as $appointment) {
@@ -112,8 +110,6 @@ class AppointmentController extends Controller
         $pending = $appointments->filter(function ($a) {
             return $a->status === 'pending';
         });
-
-        $pending = $this->applyUrgencyQueueSwaps($pending);
 
         $appointments = $serving->merge($pending);
 
