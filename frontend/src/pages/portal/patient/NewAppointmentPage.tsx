@@ -125,21 +125,21 @@ export default function NewAppointmentPage() {
     const dateObj = new Date(formData.tanggalKunjungan);
     const dayOfWeek = dateObj.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
 
-    // Klinik Lembang (ID: 1): Hanya Jumat (5), 16.00 - 20.00
+    // Klinik Lembang (ID: 1): Hanya Jumat (5), 16.00 - 20.00 dengan jeda 30 menit
     if (formData.id_klinik === '1') {
       if (dayOfWeek === 5) {
-        return ['16.00', '17.00', '18.00', '19.00', '20.00'];
+        return ['16.00', '16.30', '17.00', '17.30', '18.00', '18.30', '19.00', '19.30', '20.00'];
       }
       return [];
     }
 
-    // Klinik Cibadak (ID: 2): Senin - Kamis (1-4) jam 16-20, Sabtu (6) jam 16-18
+    // Klinik Cibadak (ID: 2): Senin - Kamis (1-4) jam 16-20, Sabtu (6) jam 16-18 dengan jeda 30 menit
     if (formData.id_klinik === '2') {
       if (dayOfWeek >= 1 && dayOfWeek <= 4) {
-        return ['16.00', '17.00', '18.00', '19.00', '20.00'];
+        return ['16.00', '16.30', '17.00', '17.30', '18.00', '18.30', '19.00', '19.30', '20.00'];
       }
       if (dayOfWeek === 6) {
-        return ['16.00', '17.00', '18.00'];
+        return ['16.00', '16.30', '17.00', '17.30', '18.00'];
       }
       return [];
     }

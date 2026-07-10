@@ -310,7 +310,7 @@ export default function AppointmentQuestionnairePage() {
               <div className="flex-1 text-xs text-slate-600 space-y-2">
                 <p className="font-bold text-slate-700 text-sm">Cara Mengambil Foto yang Baik:</p>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>Gunakan kamera belakang dengan pencahayaan terang (atau flash jika diperlukan).</li>
+                  <li>Dapat menggunakan kamera belakang/depan HP, atau webcam laptop (pastikan pencahayaan terang).</li>
                   <li>Buka mulut cukup lebar sehingga gigi yang bermasalah terlihat jelas.</li>
                   <li>Posisikan kamera sejajar dengan gigi dan pastikan gambar fokus (tidak buram).</li>
                   <li>Hindari jari atau objek lain yang menutupi area gigi dan gusi.</li>

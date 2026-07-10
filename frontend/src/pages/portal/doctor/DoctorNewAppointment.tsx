@@ -105,9 +105,11 @@ export default function DoctorNewAppointment() {
   };
 
   const today = new Date().toISOString().split('T')[0];
-  const timeSlots = Array.from({ length: 12 }, (_, i) => {
-    const hour = (i + 9).toString().padStart(2, '0');
-    return `${hour}.00`;
+  const timeSlots = Array.from({ length: 23 }, (_, i) => {
+    const totalMinutes = 9 * 60 + i * 30;
+    const hour = Math.floor(totalMinutes / 60).toString().padStart(2, '0');
+    const minute = (totalMinutes % 60).toString().padStart(2, '0');
+    return `${hour}.${minute}`;
   });
 
   const treatments = [

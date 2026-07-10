@@ -141,5 +141,6 @@ Lihat [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md) untuk panduan deploy lengka
 ## 📋 Catatan Pengembangan
 
 - Sistem belum terintegrasi dengan platform **Satu Sehat** atau **BPJS Kesehatan**
-- Validasi jadwal klinik bersifat hardcoded per klinik (Lembang: Jumat 16–20, Cibadak: Senin–Kamis & Sabtu)
-- Model ML berjalan sebagai microservice terpisah agar tidak membebani server utama
+- Validasi jadwal klinik bersifat hardcoded per klinik (Lembang: Jumat 16.00–20.00, Cibadak: Senin–Kamis 16.00–20.00 & Sabtu 16.00–18.00) dengan interval/jeda reservasi per **30 menit** (sesuai kondisi operasional di lapangan).
+- Model ML berjalan sebagai microservice terpisah agar tidak membebani server utama.
+- Penjelasan akademis mengenai perbaikan ketangguhan model AI dalam mengenali citra yang tidak sesuai petunjuk (kamera depan/webcam laptop) dan penanganan citra non-gigi (OOD detection) terdokumentasi lengkap di [`MODEL_IMPROVEMENTS.md`](./MODEL_IMPROVEMENTS.md).
